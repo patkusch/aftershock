@@ -81,7 +81,8 @@ environment, `AFTERSHOCK_URL` and `AFTERSHOCK_TASK`, and talks plain HTTP:
 
 Tools: `charge`, `send_email`, `write_file` change things. `lookup_customer`,
 `find_charges`, `find_emails`, `read_file` only look. Python agents can use
-the small helper in [`aftershock/client.py`](aftershock/client.py).
+the small helper in [`aftershock/client.py`](aftershock/client.py). For a non-Python example, [`examples/curl_agent.sh`](examples/curl_agent.sh)
+does the whole job in shell with curl and passes every test.
 
 A task file says what should happen, once each:
 
