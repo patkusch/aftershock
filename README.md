@@ -149,6 +149,12 @@ What the logs show:
 Full results, one file per setup, are in [`readings/`](readings/).
 
 
+## Questions
+
+**Do I still need this if I use a durable workflow tool?** Yes. Those tools restart your agent; they cannot know whether your payment call already went through. aftershock checks that the restart is actually safe.
+
+**Does it call real services?** No. Everything runs on your machine against fake services that record what happened.
+
 ## Limits
 
 - The services are fake. aftershock tests how your agent behaves, not how your real payment provider does.
