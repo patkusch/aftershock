@@ -1,8 +1,8 @@
 """The fake world an agent acts on: payments, email and files, all recorded.
 
 Every tool call goes through `World.call`, which is also where faults are
-injected. A fault fires once, on a chosen call number, counted across all
-restarts of the agent.
+injected. Each fault fires once, on its chosen call number, counted across
+all restarts of the agent. A run can carry several faults.
 """
 
 from __future__ import annotations
@@ -50,6 +50,16 @@ class Fault:
             raise ValueError("fault call number starts at 1")
 
     @classmethod
+    def parse_many(cls, text: str) -> tuple[Fault, ...]:
+        """Read 'crash-after@2,timeout@5' into two faults, in call order."""
+        faults = sorted((cls.parse(t.strip()) for t in text.split(",") if t.strip()), key=lambda f: f.at)
+        if not faults:
+            raise ValueError("no faults given")
+        if len({f.at for f in faults}) != len(faults):
+            raise ValueError("only one fault per call number")
+        return tuple(faults)
+
+    @classmethod
     def parse(cls, text: str) -> Fault:
         """Read 'crash-after@3' into Fault('crash-after', 3)."""
         kind, _, at = text.partition("@")
@@ -64,7 +74,7 @@ class Fault:
 @dataclass
 class World:
     customers: dict = field(default_factory=dict)
-    fault: Fault | None = None
+    faults: tuple = ()
     calls: list = field(default_factory=list)
     effects: list = field(default_factory=list)
     state: dict = field(default_factory=dict)
@@ -72,7 +82,7 @@ class World:
     attempt: int = 0
     proc: object = None
     killed: set = field(default_factory=set)  # attempt numbers we killed
-    fired: bool = False
+    fired: set = field(default_factory=set)  # call numbers whose fault fired
 
     def __post_init__(self) -> None:
         self._lock = threading.Lock()
@@ -83,9 +93,9 @@ class World:
         """Return (status, body, kill_agent)."""
         with self._lock:
             n = len(self.calls) + 1
-            fault = None
-            if self.fault and not self.fired and self.fault.at == n:
-                fault, self.fired = self.fault, True
+            fault = next((f for f in self.faults if f.at == n and n not in self.fired), None)
+            if fault:
+                self.fired.add(n)
             rec = {
                 "n": n,
                 "attempt": self.attempt,

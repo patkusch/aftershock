@@ -35,7 +35,7 @@ class Task:
 
 @dataclass
 class RunResult:
-    fault: Fault | None
+    faults: tuple
     world: World
     attempts: list
     verdict: Verdict
@@ -44,20 +44,24 @@ class RunResult:
     def passed(self) -> bool:
         return self.verdict.passed
 
-    def fault_call(self):
-        if not self.fault:
-            return None
-        for c in self.world.calls:
-            if c["fault"]:
-                return c
-        return None
+    @property
+    def fault(self):
+        """The first fault, or None. Single-fault runs have only this one."""
+        return self.faults[0] if self.faults else None
+
+    def fault_calls(self) -> list:
+        """The calls where a fault fired, in order."""
+        return [c for c in self.world.calls if c["fault"]]
+
+    @property
+    def all_fired(self) -> bool:
+        return len(self.fault_calls()) == len(self.faults)
 
     def to_dict(self) -> dict:
-        fc = self.fault_call()
         return {
-            "fault": str(self.fault) if self.fault else None,
-            "fault_tool": fc["tool"] if fc else None,
-            "fault_fired": bool(fc) if self.fault else None,
+            "faults": [str(f) for f in self.faults],
+            "fault_tools": [c["tool"] for c in self.fault_calls()],
+            "all_fired": self.all_fired,
             "passed": self.passed,
             "problems": self.verdict.problems,
             "attempts": self.attempts,
@@ -66,9 +70,14 @@ class RunResult:
         }
 
 
-def run(task: Task, cmd: list[str], fault: Fault | None = None, *,
+def run(task: Task, cmd: list[str], faults=None, *,
         max_restarts: int = 3, timeout: float = 120.0, env: dict | None = None) -> RunResult:
-    world = World(customers=dict(task.customers), fault=fault)
+    if faults is None:
+        faults = ()
+    elif isinstance(faults, Fault):
+        faults = (faults,)
+    faults = tuple(sorted(faults, key=lambda f: f.at))
+    world = World(customers=dict(task.customers), faults=faults)
     server = make_server(world)
     t = threading.Thread(target=server.serve_forever, kwargs={"poll_interval": 0.02}, daemon=True)
     t.start()
@@ -100,20 +109,40 @@ def run(task: Task, cmd: list[str], fault: Fault | None = None, *,
     finally:
         server.shutdown()
         server.server_close()
-    return RunResult(fault, world, attempts, check(task, world, attempts))
+    return RunResult(faults, world, attempts, check(task, world, attempts))
 
 
-def sweep(task: Task, cmd: list[str], kinds=FAULT_KINDS, *, on_result=None, **kw) -> list[RunResult]:
-    """One clean run, then every fault kind at every tool call the clean run made."""
+def plan(n: int, kinds=FAULT_KINDS, double: bool = False) -> list[tuple]:
+    """Which fault sets to try, given a clean run of n calls.
+
+    Single: every kind at every call. Double adds pairs: every kind at every
+    call, then every kind again at each of the next n calls. The restarted agent keeps
+    counting from where it stopped, so the second fault can land on the redo.
+    """
+    singles = [(Fault(k, at),) for at in range(1, n + 1) for k in kinds]
+    if not double:
+        return singles
+    return singles + [(Fault(k1, i), Fault(k2, j))
+                      for i in range(1, n + 1) for k1 in kinds
+                      for j in range(i + 1, i + n + 1) for k2 in kinds]
+
+
+def sweep(task: Task, cmd: list[str], kinds=FAULT_KINDS, *, double: bool = False,
+          on_result=None, **kw) -> list[RunResult]:
+    """One clean run, then every fault set from `plan`.
+
+    In a double sweep, runs where the agent finished before the second fault
+    could fire are dropped, because they repeat a single-fault test.
+    """
     base = run(task, cmd, None, **kw)
     results = [base]
     if on_result:
         on_result(base)
-    n = len(base.world.calls)
-    for at in range(1, n + 1):
-        for kind in kinds:
-            r = run(task, cmd, Fault(kind, at), **kw)
-            results.append(r)
-            if on_result:
-                on_result(r)
+    for faults in plan(len(base.world.calls), kinds, double):
+        r = run(task, cmd, faults, **kw)
+        if len(faults) > 1 and not r.all_fired:
+            continue
+        results.append(r)
+        if on_result:
+            on_result(r)
     return results
