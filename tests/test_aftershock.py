@@ -42,7 +42,7 @@ def test_no_key_means_second_effect():
 
 
 def test_fault_fires_once_on_its_call():
-    w = World(fault=Fault("error", 2))
+    w = World(faults=(Fault("error", 2),))
     assert w.call("lookup_customer", {"customer": "x"}, None)[0] == 200
     assert w.call("charge", {"customer": "c", "amount": 1}, None)[0] == 503
     assert w.call("charge", {"customer": "c", "amount": 1}, None)[0] == 200
@@ -50,19 +50,19 @@ def test_fault_fires_once_on_its_call():
 
 
 def test_crash_after_applies_then_kills():
-    w = World(fault=Fault("crash-after", 1))
+    w = World(faults=(Fault("crash-after", 1),))
     status, _, kill = w.call("send_email", {"to": "a@b", "subject": "s"}, None)
     assert kill and status is None and len(w.effects) == 1
 
 
 def test_crash_before_does_not_apply():
-    w = World(fault=Fault("crash-before", 1))
+    w = World(faults=(Fault("crash-before", 1),))
     _, _, kill = w.call("send_email", {"to": "a@b", "subject": "s"}, None)
     assert kill and not w.effects
 
 
 def test_timeout_applies_but_reports_failure():
-    w = World(fault=Fault("timeout", 1))
+    w = World(faults=(Fault("timeout", 1),))
     status, _, kill = w.call("charge", {"customer": "c", "amount": 1}, None)
     assert status == 504 and not kill and len(w.effects) == 1
 
@@ -258,3 +258,70 @@ def test_llm_agent_with_memory_resumes(fake_ollama):
     assert run(TASK, agent("llm"), Fault("crash-before", 3), env=env, timeout=20).passed
     # ...but the lost reply still costs a second charge
     assert kinds_of(run(TASK, agent("llm"), Fault("crash-after", 2), env=env, timeout=20)) == ["duplicate"]
+
+
+# -- two faults in one run ---------------------------------------------------
+
+def test_parse_many_sorts_and_rejects_clashes():
+    assert Fault.parse_many("timeout@5, crash-after@2") == (Fault("crash-after", 2), Fault("timeout", 5))
+    for bad in ("", "error@2,timeout@2", "error@2,melt@3"):
+        with pytest.raises(ValueError):
+            Fault.parse_many(bad)
+
+
+def test_world_fires_each_fault_once():
+    w = World(faults=(Fault("error", 1), Fault("error", 2)))
+    codes = [w.call("charge", {"customer": "c", "amount": 1}, None)[0] for _ in range(3)]
+    assert codes == [503, 503, 200] and len(w.effects) == 1
+
+
+def test_plan_counts():
+    from aftershock.runner import plan
+    assert len(plan(4)) == 16
+    assert len(plan(4, double=True)) == 16 + 4 * 4 * 4 * 4
+    assert len(plan(3, ["error"], double=True)) == 3 + 3 * 3
+
+
+def test_safe_survives_two_lost_replies():
+    r = run(TASK, agent("safe"), Fault.parse_many("crash-after@2,crash-after@4"), timeout=20)
+    assert r.passed and r.all_fired and len(r.attempts) == 3
+
+
+def test_second_fault_that_never_fires_is_reported():
+    r = run(TASK, agent("safe"), Fault.parse_many("error@2,error@99"), timeout=20)
+    assert r.passed and not r.all_fired
+
+
+RETRY_ONCE = """
+import sys
+from aftershock.client import ToolError, tool
+def once(name, **a):
+    try:
+        return tool(name, **a)
+    except ToolError as e:
+        if e.status < 500:
+            raise
+        return tool(name, **a)  # one retry only
+c = once("lookup_customer", customer="cus_42")
+once("charge", customer="cus_42", amount=120)
+once("send_email", to=c["email"], subject="Receipt")
+once("write_file", path="invoices/cus_42-nov.txt", content="x")
+"""
+
+
+def test_double_sweep_finds_what_single_faults_miss(tmp_path):
+    from aftershock.report import only_double, summary
+    a = tmp_path / "retry_once.py"
+    a.write_text(RETRY_ONCE)
+    res = sweep(TASK, [sys.executable, str(a)], ["error"], double=True, max_restarts=0, timeout=20)
+    singles = [r for r in res[1:] if len(r.faults) == 1]
+    assert singles and all(r.passed for r in singles)
+    new = only_double(res)
+    assert new and all("unfinished" in kinds_of(r) for r in new)
+    assert "only show up when two things break" in summary(res)
+
+
+def test_cli_run_with_two_faults(capsys):
+    code = main(["run", str(DEMO / "invoice.json"), "--fault", "crash-after@2,timeout@4", "--", *agent("safe")])
+    assert code == 0
+    assert "crash-after at call 2 (charge) then timeout at call 4" in capsys.readouterr().out
