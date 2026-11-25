@@ -161,6 +161,13 @@ Full results, one file per setup, are in [`readings/`](readings/).
 - One fault per run. Two crashes in a row are not tested yet.
 - A fault is placed by call number, so an agent that makes different calls each run (common with language models) can be hit at different places from one run to the next.
 
+## More
+
+- [The four faults](docs/faults.md)
+- [Writing a task file](docs/writing-a-task.md)
+- [Readings](readings/)
+- [Changelog](CHANGELOG.md)
+
 ## Licence
 
 MIT
