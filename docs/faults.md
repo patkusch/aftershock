@@ -1,6 +1,6 @@
 # The four faults
 
-Each fault is placed on one tool call, counted from the start of the run.
+Each fault is placed on one tool call, counted from the start of the run and across restarts. A run can carry two faults (`--double`, or `--fault a@2,b@5`).
 
 | Fault | The service | The agent | Bug it finds |
 |---|---|---|---|

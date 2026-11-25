@@ -77,6 +77,26 @@ It exits 0 when every test passes and 1 when any fails, so it can gate CI.
 Add `--md report.md` for a table or `--json results.json` for every call and
 effect. To try one fault: `aftershock run my_task.json --fault crash-after@2 -- python my_agent.py`.
 
+### Two things breaking in one run
+
+Real outages rarely break just once. Add `--double` to also try every pair of
+faults in a single run, for example a lost reply and then a timeout while the
+agent recovers:
+
+```bash
+aftershock sweep my_task.json --double -- python my_agent.py
+```
+
+The report then names any failure that **only** shows up when two things
+break, where each fault alone on the same step passes. To try one pair by
+hand: `--fault crash-after@2,timeout@5`.
+
+On the three demo agents, two faults found nothing new: every two-fault
+failure traced back to a step that already fails on its own, and the safe
+agent passed all 160 pairs. An agent that retries a failed call only once is
+different. It survives any single error but gives up when two arrive in a row,
+and only the double sweep catches that.
+
 Your agent can be written in any language. It reads two settings from its
 environment, `AFTERSHOCK_URL` and `AFTERSHOCK_TASK`, and talks plain HTTP:
 
@@ -158,7 +178,7 @@ Full results, one file per setup, are in [`readings/`](readings/).
 ## Limits
 
 - The services are fake. aftershock tests how your agent behaves, not how your real payment provider does.
-- One fault per run. Two crashes in a row are not tested yet.
+- At most two faults per run. A double sweep is slow: about 160 to 210 runs for a four-step task, instead of 16.
 - A fault is placed by call number, so an agent that makes different calls each run (common with language models) can be hit at different places from one run to the next.
 
 ## More
