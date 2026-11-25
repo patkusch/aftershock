@@ -1,0 +1,32 @@
+PASS  No fault
+PASS  crash-before at call 1 (lookup_customer)
+PASS  crash-after at call 1 (lookup_customer)
+PASS  timeout at call 1 (lookup_customer)
+PASS  error at call 1 (lookup_customer)
+PASS  crash-before at call 2 (charge)
+FAIL  crash-after at call 2 (charge): did 2 times, should be once: charge cus_42 120
+PASS  timeout at call 2 (charge)
+FAIL  error at call 2 (charge): never did: charge cus_42 120
+FAIL  crash-before at call 3 (send_email): did 2 times, should be once: charge cus_42 120
+FAIL  crash-after at call 3 (send_email): did 2 times, should be once: charge cus_42 120; did 2 times, should be once: email ana@example.com
+PASS  timeout at call 3 (send_email)
+PASS  error at call 3 (send_email)
+FAIL  crash-before at call 4 (write_file): did 2 times, should be once: charge cus_42 120; did 2 times, should be once: email ana@example.com
+FAIL  crash-after at call 4 (write_file): did 2 times, should be once: charge cus_42 120; did 2 times, should be once: email ana@example.com
+PASS  timeout at call 4 (write_file)
+PASS  error at call 4 (write_file)
+
+Clean run made 4 tool calls: lookup_customer, charge, send_email, write_file.
+10 of 16 crash tests passed.
+
+When the agent was killed just before the call reached the service:
+  FAIL  crash-before at call 3 (send_email): did 2 times, should be once: charge cus_42 120
+  FAIL  crash-before at call 4 (write_file): did 2 times, should be once: charge cus_42 120; did 2 times, should be once: email ana@example.com
+
+When the service did the work, then the agent was killed before it heard back:
+  FAIL  crash-after at call 2 (charge): did 2 times, should be once: charge cus_42 120
+  FAIL  crash-after at call 3 (send_email): did 2 times, should be once: charge cus_42 120; did 2 times, should be once: email ana@example.com
+  FAIL  crash-after at call 4 (write_file): did 2 times, should be once: charge cus_42 120; did 2 times, should be once: email ana@example.com
+
+When the service refused the call once with a temporary error:
+  FAIL  error at call 2 (charge): never did: charge cus_42 120

@@ -1,0 +1,4233 @@
+[
+  {
+    "faults": [],
+    "fault_tools": [],
+    "all_fired": true,
+    "passed": true,
+    "problems": [],
+    "attempts": [
+      {
+        "attempt": 1,
+        "exit": 0,
+        "killed": false,
+        "output": "lookup_customer {\"customer\": \"cus_42\"} -> {\"customer\": \"cus_42\", \"name\": \"Ana Silva\", \"email\": \"ana@example.com\"}\nfind_charges {\"customer\": \"cus_42\"} -> {\"charges\": []}\ncharge {\"customer\": \"cus_42\", \"amount\": 120, \"description\": \"November invoice\"} -> {\"ok\": true, \"id\": \"ch_1\"}\nfind_emails {\"to\": \"ana@example.com\"} -> {\"emails\": []}\nsend_email {\"to\": \"ana@example.com\", \"subject\": \"Receipt for November Invoice\", \"body\": \"Dear Ana Silva,\\n\\nThank you for your payment of \\u00a3120 for November. Please find attached a copy of your invoice.\\n\\nSincerely,\\nOperations Team\"} -> {\"ok\": true, \"id\": \"em_2\"}\nwrite_file {\"path\": \"invoices/cus_42-nov.txt\", \"content\": \"Customer: Ana Silva (cus_42)\\nAmount: \\u00a3120\\nDescription: November invoice\\nDate: 2024-01-29\"} -> {\"ok\": true, \"id\": \"fi_3\"}\ndone: Charged cus_42 \u00a3120, emailed receipt to ana@example.com, and saved invoice to invoices/cus_42-nov.txt.\n"
+      }
+    ],
+    "calls": [
+      {
+        "n": 1,
+        "attempt": 1,
+        "tool": "lookup_customer",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 2,
+        "attempt": 1,
+        "tool": "find_charges",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 3,
+        "attempt": 1,
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 4,
+        "attempt": 1,
+        "tool": "find_emails",
+        "args": {
+          "to": "ana@example.com"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 5,
+        "attempt": 1,
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached a copy of your invoice.\n\nSincerely,\nOperations Team"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 6,
+        "attempt": 1,
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-01-29"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      }
+    ],
+    "effects": [
+      {
+        "id": "ch_1",
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "call": 3,
+        "attempt": 1
+      },
+      {
+        "id": "em_2",
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached a copy of your invoice.\n\nSincerely,\nOperations Team"
+        },
+        "call": 5,
+        "attempt": 1
+      },
+      {
+        "id": "fi_3",
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-01-29"
+        },
+        "call": 6,
+        "attempt": 1
+      }
+    ]
+  },
+  {
+    "faults": [
+      "crash-before@1"
+    ],
+    "fault_tools": [
+      "lookup_customer"
+    ],
+    "all_fired": true,
+    "passed": true,
+    "problems": [],
+    "attempts": [
+      {
+        "attempt": 1,
+        "exit": -9,
+        "killed": true,
+        "output": ""
+      },
+      {
+        "attempt": 2,
+        "exit": 0,
+        "killed": false,
+        "output": "lookup_customer {\"customer\": \"cus_42\"} -> {\"customer\": \"cus_42\", \"name\": \"Ana Silva\", \"email\": \"ana@example.com\"}\nfind_charges {\"customer\": \"cus_42\"} -> {\"charges\": []}\ncharge {\"customer\": \"cus_42\", \"amount\": 120, \"description\": \"November invoice\"} -> {\"ok\": true, \"id\": \"ch_1\"}\nfind_emails {\"to\": \"ana@example.com\"} -> {\"emails\": []}\nsend_email {\"to\": \"ana@example.com\", \"subject\": \"Receipt for November Invoice\", \"body\": \"Dear Ana Silva,\\n\\nThank you for your payment of \\u00a3120 for November. Please find attached a copy of your invoice.\\n\\nSincerely,\\nOperations Team\"} -> {\"ok\": true, \"id\": \"em_2\"}\nwrite_file {\"path\": \"invoices/cus_42-nov.txt\", \"content\": \"Customer: Ana Silva (cus_42)\\nAmount: \\u00a3120\\nDescription: November invoice\\nDate: 2024-01-29\"} -> {\"ok\": true, \"id\": \"fi_3\"}\ndone: Charged cus_42 \u00a3120, emailed receipt to ana@example.com, and saved invoice to invoices/cus_42-nov.txt.\n"
+      }
+    ],
+    "calls": [
+      {
+        "n": 1,
+        "attempt": 1,
+        "tool": "lookup_customer",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": "crash-before"
+      },
+      {
+        "n": 2,
+        "attempt": 2,
+        "tool": "lookup_customer",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 3,
+        "attempt": 2,
+        "tool": "find_charges",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 4,
+        "attempt": 2,
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 5,
+        "attempt": 2,
+        "tool": "find_emails",
+        "args": {
+          "to": "ana@example.com"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 6,
+        "attempt": 2,
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached a copy of your invoice.\n\nSincerely,\nOperations Team"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 7,
+        "attempt": 2,
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-01-29"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      }
+    ],
+    "effects": [
+      {
+        "id": "ch_1",
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "call": 4,
+        "attempt": 2
+      },
+      {
+        "id": "em_2",
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached a copy of your invoice.\n\nSincerely,\nOperations Team"
+        },
+        "call": 6,
+        "attempt": 2
+      },
+      {
+        "id": "fi_3",
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-01-29"
+        },
+        "call": 7,
+        "attempt": 2
+      }
+    ]
+  },
+  {
+    "faults": [
+      "crash-after@1"
+    ],
+    "fault_tools": [
+      "lookup_customer"
+    ],
+    "all_fired": true,
+    "passed": true,
+    "problems": [],
+    "attempts": [
+      {
+        "attempt": 1,
+        "exit": -9,
+        "killed": true,
+        "output": ""
+      },
+      {
+        "attempt": 2,
+        "exit": 0,
+        "killed": false,
+        "output": "lookup_customer {\"customer\": \"cus_42\"} -> {\"customer\": \"cus_42\", \"name\": \"Ana Silva\", \"email\": \"ana@example.com\"}\nfind_charges {\"customer\": \"cus_42\"} -> {\"charges\": []}\ncharge {\"customer\": \"cus_42\", \"amount\": 120, \"description\": \"November invoice\"} -> {\"ok\": true, \"id\": \"ch_1\"}\nfind_emails {\"to\": \"ana@example.com\"} -> {\"emails\": []}\nsend_email {\"to\": \"ana@example.com\", \"subject\": \"Receipt for November Invoice\", \"body\": \"Dear Ana Silva,\\n\\nThank you for your payment of \\u00a3120 for November. Please find attached a copy of your invoice.\\n\\nSincerely,\\nOperations Team\"} -> {\"ok\": true, \"id\": \"em_2\"}\nwrite_file {\"path\": \"invoices/cus_42-nov.txt\", \"content\": \"Customer: Ana Silva (cus_42)\\nAmount: \\u00a3120\\nDescription: November invoice\\nDate: 2024-01-29\"} -> {\"ok\": true, \"id\": \"fi_3\"}\ndone: Charged cus_42 \u00a3120, emailed receipt to ana@example.com, and saved invoice to invoices/cus_42-nov.txt.\n"
+      }
+    ],
+    "calls": [
+      {
+        "n": 1,
+        "attempt": 1,
+        "tool": "lookup_customer",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": "crash-after"
+      },
+      {
+        "n": 2,
+        "attempt": 2,
+        "tool": "lookup_customer",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 3,
+        "attempt": 2,
+        "tool": "find_charges",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 4,
+        "attempt": 2,
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 5,
+        "attempt": 2,
+        "tool": "find_emails",
+        "args": {
+          "to": "ana@example.com"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 6,
+        "attempt": 2,
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached a copy of your invoice.\n\nSincerely,\nOperations Team"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 7,
+        "attempt": 2,
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-01-29"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      }
+    ],
+    "effects": [
+      {
+        "id": "ch_1",
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "call": 4,
+        "attempt": 2
+      },
+      {
+        "id": "em_2",
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached a copy of your invoice.\n\nSincerely,\nOperations Team"
+        },
+        "call": 6,
+        "attempt": 2
+      },
+      {
+        "id": "fi_3",
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-01-29"
+        },
+        "call": 7,
+        "attempt": 2
+      }
+    ]
+  },
+  {
+    "faults": [
+      "timeout@1"
+    ],
+    "fault_tools": [
+      "lookup_customer"
+    ],
+    "all_fired": true,
+    "passed": true,
+    "problems": [],
+    "attempts": [
+      {
+        "attempt": 1,
+        "exit": 0,
+        "killed": false,
+        "output": "lookup_customer {\"customer\": \"cus_42\"} -> {\"error\": \"request timed out\", \"status\": 504}\nlookup_customer {\"customer\": \"cus_42\"} -> {\"customer\": \"cus_42\", \"name\": \"Ana Silva\", \"email\": \"ana@example.com\"}\nfind_charges {\"customer\": \"cus_42\"} -> {\"charges\": []}\ncharge {\"customer\": \"cus_42\", \"amount\": 120, \"description\": \"November invoice\"} -> {\"ok\": true, \"id\": \"ch_1\"}\nfind_emails {\"to\": \"ana@example.com\"} -> {\"emails\": []}\nsend_email {\"to\": \"ana@example.com\", \"subject\": \"Receipt for November Invoice\", \"body\": \"Dear Ana Silva,\\n\\nThank you for your payment of \\u00a3120 for November. Please find attached your receipt.\\n\\nSincerely,\\nOperations Team\"} -> {\"ok\": true, \"id\": \"em_2\"}\nwrite_file {\"path\": \"invoices/cus_42-nov.txt\", \"content\": \"Customer: Ana Silva (cus_42)\\nAmount: \\u00a3120\\nDescription: November invoice\\nDate: 2024-02-29\\nReference: ch_1\"} -> {\"ok\": true, \"id\": \"fi_3\"}\ndone: Charged cus_42 \u00a3120, emailed receipt to ana@example.com, and saved invoice to invoices/cus_42-nov.txt.\n"
+      }
+    ],
+    "calls": [
+      {
+        "n": 1,
+        "attempt": 1,
+        "tool": "lookup_customer",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": "timeout"
+      },
+      {
+        "n": 2,
+        "attempt": 1,
+        "tool": "lookup_customer",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 3,
+        "attempt": 1,
+        "tool": "find_charges",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 4,
+        "attempt": 1,
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 5,
+        "attempt": 1,
+        "tool": "find_emails",
+        "args": {
+          "to": "ana@example.com"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 6,
+        "attempt": 1,
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached your receipt.\n\nSincerely,\nOperations Team"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 7,
+        "attempt": 1,
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-02-29\nReference: ch_1"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      }
+    ],
+    "effects": [
+      {
+        "id": "ch_1",
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "call": 4,
+        "attempt": 1
+      },
+      {
+        "id": "em_2",
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached your receipt.\n\nSincerely,\nOperations Team"
+        },
+        "call": 6,
+        "attempt": 1
+      },
+      {
+        "id": "fi_3",
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-02-29\nReference: ch_1"
+        },
+        "call": 7,
+        "attempt": 1
+      }
+    ]
+  },
+  {
+    "faults": [
+      "error@1"
+    ],
+    "fault_tools": [
+      "lookup_customer"
+    ],
+    "all_fired": true,
+    "passed": true,
+    "problems": [],
+    "attempts": [
+      {
+        "attempt": 1,
+        "exit": 0,
+        "killed": false,
+        "output": "lookup_customer {\"customer\": \"cus_42\"} -> {\"error\": \"service unavailable, try again\", \"status\": 503}\nlookup_customer {\"customer\": \"cus_42\"} -> {\"customer\": \"cus_42\", \"name\": \"Ana Silva\", \"email\": \"ana@example.com\"}\nfind_charges {\"customer\": \"cus_42\"} -> {\"charges\": []}\ncharge {\"customer\": \"cus_42\", \"amount\": 120, \"description\": \"November invoice\"} -> {\"ok\": true, \"id\": \"ch_1\"}\nfind_emails {\"to\": \"ana@example.com\"} -> {\"emails\": []}\nsend_email {\"to\": \"ana@example.com\", \"subject\": \"Invoice for November\", \"body\": \"Dear Ana Silva,\\n\\nThank you for your payment of \\u00a3120 for November. A copy of your invoice is attached.\\n\\nSincerely,\\nOperations\"} -> {\"ok\": true, \"id\": \"em_2\"}\nwrite_file {\"path\": \"invoices/cus_42-nov.txt\", \"content\": \"Invoice for cus_42, amount \\u00a3120, date 2024-02-29, description November invoice\"} -> {\"ok\": true, \"id\": \"fi_3\"}\ndone: Charged cus_42 \u00a3120, emailed receipt to ana@example.com, and saved invoice to invoices/cus_42-nov.txt.\n"
+      }
+    ],
+    "calls": [
+      {
+        "n": 1,
+        "attempt": 1,
+        "tool": "lookup_customer",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": "error"
+      },
+      {
+        "n": 2,
+        "attempt": 1,
+        "tool": "lookup_customer",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 3,
+        "attempt": 1,
+        "tool": "find_charges",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 4,
+        "attempt": 1,
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 5,
+        "attempt": 1,
+        "tool": "find_emails",
+        "args": {
+          "to": "ana@example.com"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 6,
+        "attempt": 1,
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Invoice for November",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. A copy of your invoice is attached.\n\nSincerely,\nOperations"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 7,
+        "attempt": 1,
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Invoice for cus_42, amount \u00a3120, date 2024-02-29, description November invoice"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      }
+    ],
+    "effects": [
+      {
+        "id": "ch_1",
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "call": 4,
+        "attempt": 1
+      },
+      {
+        "id": "em_2",
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Invoice for November",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. A copy of your invoice is attached.\n\nSincerely,\nOperations"
+        },
+        "call": 6,
+        "attempt": 1
+      },
+      {
+        "id": "fi_3",
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Invoice for cus_42, amount \u00a3120, date 2024-02-29, description November invoice"
+        },
+        "call": 7,
+        "attempt": 1
+      }
+    ]
+  },
+  {
+    "faults": [
+      "crash-before@2"
+    ],
+    "fault_tools": [
+      "find_charges"
+    ],
+    "all_fired": true,
+    "passed": true,
+    "problems": [],
+    "attempts": [
+      {
+        "attempt": 1,
+        "exit": -9,
+        "killed": true,
+        "output": ""
+      },
+      {
+        "attempt": 2,
+        "exit": 0,
+        "killed": false,
+        "output": "lookup_customer {\"customer\": \"cus_42\"} -> {\"customer\": \"cus_42\", \"name\": \"Ana Silva\", \"email\": \"ana@example.com\"}\nfind_charges {\"customer\": \"cus_42\"} -> {\"charges\": []}\ncharge {\"customer\": \"cus_42\", \"amount\": 120, \"description\": \"November invoice\"} -> {\"ok\": true, \"id\": \"ch_1\"}\nfind_emails {\"to\": \"ana@example.com\"} -> {\"emails\": []}\nsend_email {\"to\": \"ana@example.com\", \"subject\": \"Receipt for November Invoice\", \"body\": \"Dear Ana Silva,\\n\\nThank you for your payment of \\u00a3120 for November. Please find attached a copy of your invoice.\\n\\nSincerely,\\nOperations Team\"} -> {\"ok\": true, \"id\": \"em_2\"}\nwrite_file {\"path\": \"invoices/cus_42-nov.txt\", \"content\": \"Customer: Ana Silva (cus_42)\\nAmount: \\u00a3120\\nDescription: November invoice\\nDate: 2024-01-29\"} -> {\"ok\": true, \"id\": \"fi_3\"}\ndone: Charged cus_42 \u00a3120, emailed receipt to ana@example.com, and saved invoice to invoices/cus_42-nov.txt.\n"
+      }
+    ],
+    "calls": [
+      {
+        "n": 1,
+        "attempt": 1,
+        "tool": "lookup_customer",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 2,
+        "attempt": 1,
+        "tool": "find_charges",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": "crash-before"
+      },
+      {
+        "n": 3,
+        "attempt": 2,
+        "tool": "lookup_customer",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 4,
+        "attempt": 2,
+        "tool": "find_charges",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 5,
+        "attempt": 2,
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 6,
+        "attempt": 2,
+        "tool": "find_emails",
+        "args": {
+          "to": "ana@example.com"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 7,
+        "attempt": 2,
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached a copy of your invoice.\n\nSincerely,\nOperations Team"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 8,
+        "attempt": 2,
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-01-29"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      }
+    ],
+    "effects": [
+      {
+        "id": "ch_1",
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "call": 5,
+        "attempt": 2
+      },
+      {
+        "id": "em_2",
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached a copy of your invoice.\n\nSincerely,\nOperations Team"
+        },
+        "call": 7,
+        "attempt": 2
+      },
+      {
+        "id": "fi_3",
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-01-29"
+        },
+        "call": 8,
+        "attempt": 2
+      }
+    ]
+  },
+  {
+    "faults": [
+      "crash-after@2"
+    ],
+    "fault_tools": [
+      "find_charges"
+    ],
+    "all_fired": true,
+    "passed": true,
+    "problems": [],
+    "attempts": [
+      {
+        "attempt": 1,
+        "exit": -9,
+        "killed": true,
+        "output": ""
+      },
+      {
+        "attempt": 2,
+        "exit": 0,
+        "killed": false,
+        "output": "lookup_customer {\"customer\": \"cus_42\"} -> {\"customer\": \"cus_42\", \"name\": \"Ana Silva\", \"email\": \"ana@example.com\"}\nfind_charges {\"customer\": \"cus_42\"} -> {\"charges\": []}\ncharge {\"customer\": \"cus_42\", \"amount\": 120, \"description\": \"November invoice\"} -> {\"ok\": true, \"id\": \"ch_1\"}\nfind_emails {\"to\": \"ana@example.com\"} -> {\"emails\": []}\nsend_email {\"to\": \"ana@example.com\", \"subject\": \"Receipt for November Invoice\", \"body\": \"Dear Ana Silva,\\n\\nThank you for your payment of \\u00a3120 for November. Please find attached a copy of your invoice.\\n\\nSincerely,\\nOperations Team\"} -> {\"ok\": true, \"id\": \"em_2\"}\nwrite_file {\"path\": \"invoices/cus_42-nov.txt\", \"content\": \"Customer: Ana Silva (cus_42)\\nAmount: \\u00a3120\\nDescription: November invoice\\nDate: 2024-01-29\"} -> {\"ok\": true, \"id\": \"fi_3\"}\ndone: Charged cus_42 \u00a3120, emailed receipt to ana@example.com, and saved invoice to invoices/cus_42-nov.txt.\n"
+      }
+    ],
+    "calls": [
+      {
+        "n": 1,
+        "attempt": 1,
+        "tool": "lookup_customer",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 2,
+        "attempt": 1,
+        "tool": "find_charges",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": "crash-after"
+      },
+      {
+        "n": 3,
+        "attempt": 2,
+        "tool": "lookup_customer",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 4,
+        "attempt": 2,
+        "tool": "find_charges",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 5,
+        "attempt": 2,
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 6,
+        "attempt": 2,
+        "tool": "find_emails",
+        "args": {
+          "to": "ana@example.com"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 7,
+        "attempt": 2,
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached a copy of your invoice.\n\nSincerely,\nOperations Team"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 8,
+        "attempt": 2,
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-01-29"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      }
+    ],
+    "effects": [
+      {
+        "id": "ch_1",
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "call": 5,
+        "attempt": 2
+      },
+      {
+        "id": "em_2",
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached a copy of your invoice.\n\nSincerely,\nOperations Team"
+        },
+        "call": 7,
+        "attempt": 2
+      },
+      {
+        "id": "fi_3",
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-01-29"
+        },
+        "call": 8,
+        "attempt": 2
+      }
+    ]
+  },
+  {
+    "faults": [
+      "timeout@2"
+    ],
+    "fault_tools": [
+      "find_charges"
+    ],
+    "all_fired": true,
+    "passed": true,
+    "problems": [],
+    "attempts": [
+      {
+        "attempt": 1,
+        "exit": 0,
+        "killed": false,
+        "output": "lookup_customer {\"customer\": \"cus_42\"} -> {\"customer\": \"cus_42\", \"name\": \"Ana Silva\", \"email\": \"ana@example.com\"}\nfind_charges {\"customer\": \"cus_42\"} -> {\"error\": \"request timed out\", \"status\": 504}\nfind_charges {\"customer\": \"cus_42\"} -> {\"charges\": []}\ncharge {\"customer\": \"cus_42\", \"amount\": 120, \"description\": \"November invoice\"} -> {\"ok\": true, \"id\": \"ch_1\"}\nfind_emails {\"to\": \"ana@example.com\"} -> {\"emails\": []}\nsend_email {\"to\": \"ana@example.com\", \"subject\": \"Invoice for November\", \"body\": \"Dear Ana Silva,\\n\\nThank you for your payment of \\u00a3120 for November. A copy of your invoice is attached.\\n\\nSincerely,\\nOperations\"} -> {\"ok\": true, \"id\": \"em_2\"}\nwrite_file {\"path\": \"invoices/cus_42-nov.txt\", \"content\": \"Invoice for cus_42, amount \\u00a3120, date 2024-02-29, description November invoice\"} -> {\"ok\": true, \"id\": \"fi_3\"}\ndone: Charged cus_42 \u00a3120, emailed receipt to ana@example.com, and saved invoice to invoices/cus_42-nov.txt.\n"
+      }
+    ],
+    "calls": [
+      {
+        "n": 1,
+        "attempt": 1,
+        "tool": "lookup_customer",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 2,
+        "attempt": 1,
+        "tool": "find_charges",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": "timeout"
+      },
+      {
+        "n": 3,
+        "attempt": 1,
+        "tool": "find_charges",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 4,
+        "attempt": 1,
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 5,
+        "attempt": 1,
+        "tool": "find_emails",
+        "args": {
+          "to": "ana@example.com"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 6,
+        "attempt": 1,
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Invoice for November",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. A copy of your invoice is attached.\n\nSincerely,\nOperations"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 7,
+        "attempt": 1,
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Invoice for cus_42, amount \u00a3120, date 2024-02-29, description November invoice"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      }
+    ],
+    "effects": [
+      {
+        "id": "ch_1",
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "call": 4,
+        "attempt": 1
+      },
+      {
+        "id": "em_2",
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Invoice for November",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. A copy of your invoice is attached.\n\nSincerely,\nOperations"
+        },
+        "call": 6,
+        "attempt": 1
+      },
+      {
+        "id": "fi_3",
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Invoice for cus_42, amount \u00a3120, date 2024-02-29, description November invoice"
+        },
+        "call": 7,
+        "attempt": 1
+      }
+    ]
+  },
+  {
+    "faults": [
+      "error@2"
+    ],
+    "fault_tools": [
+      "find_charges"
+    ],
+    "all_fired": true,
+    "passed": true,
+    "problems": [],
+    "attempts": [
+      {
+        "attempt": 1,
+        "exit": 0,
+        "killed": false,
+        "output": "lookup_customer {\"customer\": \"cus_42\"} -> {\"customer\": \"cus_42\", \"name\": \"Ana Silva\", \"email\": \"ana@example.com\"}\nfind_charges {\"customer\": \"cus_42\"} -> {\"error\": \"service unavailable, try again\", \"status\": 503}\nfind_charges {\"customer\": \"cus_42\"} -> {\"charges\": []}\ncharge {\"customer\": \"cus_42\", \"amount\": 120, \"description\": \"November invoice\"} -> {\"ok\": true, \"id\": \"ch_1\"}\nfind_emails {\"to\": \"ana@example.com\"} -> {\"emails\": []}\nsend_email {\"to\": \"ana@example.com\", \"subject\": \"Invoice for November\", \"body\": \"Dear Ana Silva,\\n\\nThank you for your payment of \\u00a3120 for November. A copy of your invoice is attached.\\n\\nSincerely,\\nOperations\"} -> {\"ok\": true, \"id\": \"em_2\"}\nwrite_file {\"path\": \"invoices/cus_42-nov.txt\", \"content\": \"Invoice for cus_42, amount \\u00a3120, date 2024-01-01\"} -> {\"ok\": true, \"id\": \"fi_3\"}\ndone: Charged cus_42 \u00a3120, emailed receipt to ana@example.com, and saved invoice to invoices/cus_42-nov.txt.\n"
+      }
+    ],
+    "calls": [
+      {
+        "n": 1,
+        "attempt": 1,
+        "tool": "lookup_customer",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 2,
+        "attempt": 1,
+        "tool": "find_charges",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": "error"
+      },
+      {
+        "n": 3,
+        "attempt": 1,
+        "tool": "find_charges",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 4,
+        "attempt": 1,
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 5,
+        "attempt": 1,
+        "tool": "find_emails",
+        "args": {
+          "to": "ana@example.com"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 6,
+        "attempt": 1,
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Invoice for November",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. A copy of your invoice is attached.\n\nSincerely,\nOperations"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 7,
+        "attempt": 1,
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Invoice for cus_42, amount \u00a3120, date 2024-01-01"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      }
+    ],
+    "effects": [
+      {
+        "id": "ch_1",
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "call": 4,
+        "attempt": 1
+      },
+      {
+        "id": "em_2",
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Invoice for November",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. A copy of your invoice is attached.\n\nSincerely,\nOperations"
+        },
+        "call": 6,
+        "attempt": 1
+      },
+      {
+        "id": "fi_3",
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Invoice for cus_42, amount \u00a3120, date 2024-01-01"
+        },
+        "call": 7,
+        "attempt": 1
+      }
+    ]
+  },
+  {
+    "faults": [
+      "crash-before@3"
+    ],
+    "fault_tools": [
+      "charge"
+    ],
+    "all_fired": true,
+    "passed": true,
+    "problems": [],
+    "attempts": [
+      {
+        "attempt": 1,
+        "exit": -9,
+        "killed": true,
+        "output": ""
+      },
+      {
+        "attempt": 2,
+        "exit": 0,
+        "killed": false,
+        "output": "lookup_customer {\"customer\": \"cus_42\"} -> {\"customer\": \"cus_42\", \"name\": \"Ana Silva\", \"email\": \"ana@example.com\"}\nfind_charges {\"customer\": \"cus_42\"} -> {\"charges\": []}\ncharge {\"customer\": \"cus_42\", \"amount\": 120, \"description\": \"November invoice\"} -> {\"ok\": true, \"id\": \"ch_1\"}\nfind_emails {\"to\": \"ana@example.com\"} -> {\"emails\": []}\nsend_email {\"to\": \"ana@example.com\", \"subject\": \"Receipt for November Invoice\", \"body\": \"Dear Ana Silva,\\n\\nThank you for your payment of \\u00a3120 for November. Please find attached a copy of your invoice.\\n\\nSincerely,\\nOperations Team\"} -> {\"ok\": true, \"id\": \"em_2\"}\nwrite_file {\"path\": \"invoices/cus_42-nov.txt\", \"content\": \"Customer: Ana Silva (cus_42)\\nAmount: \\u00a3120\\nDescription: November invoice\\nDate: 2024-01-29\"} -> {\"ok\": true, \"id\": \"fi_3\"}\ndone: Charged cus_42 \u00a3120, emailed receipt to ana@example.com, and saved invoice to invoices/cus_42-nov.txt.\n"
+      }
+    ],
+    "calls": [
+      {
+        "n": 1,
+        "attempt": 1,
+        "tool": "lookup_customer",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 2,
+        "attempt": 1,
+        "tool": "find_charges",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 3,
+        "attempt": 1,
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": "crash-before"
+      },
+      {
+        "n": 4,
+        "attempt": 2,
+        "tool": "lookup_customer",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 5,
+        "attempt": 2,
+        "tool": "find_charges",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 6,
+        "attempt": 2,
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 7,
+        "attempt": 2,
+        "tool": "find_emails",
+        "args": {
+          "to": "ana@example.com"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 8,
+        "attempt": 2,
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached a copy of your invoice.\n\nSincerely,\nOperations Team"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 9,
+        "attempt": 2,
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-01-29"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      }
+    ],
+    "effects": [
+      {
+        "id": "ch_1",
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "call": 6,
+        "attempt": 2
+      },
+      {
+        "id": "em_2",
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached a copy of your invoice.\n\nSincerely,\nOperations Team"
+        },
+        "call": 8,
+        "attempt": 2
+      },
+      {
+        "id": "fi_3",
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-01-29"
+        },
+        "call": 9,
+        "attempt": 2
+      }
+    ]
+  },
+  {
+    "faults": [
+      "crash-after@3"
+    ],
+    "fault_tools": [
+      "charge"
+    ],
+    "all_fired": true,
+    "passed": false,
+    "problems": [
+      {
+        "kind": "duplicate",
+        "text": "did 2 times, should be once: charge cus_42 120"
+      }
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "exit": -9,
+        "killed": true,
+        "output": ""
+      },
+      {
+        "attempt": 2,
+        "exit": 0,
+        "killed": false,
+        "output": "lookup_customer {\"customer\": \"cus_42\"} -> {\"customer\": \"cus_42\", \"name\": \"Ana Silva\", \"email\": \"ana@example.com\"}\nfind_charges {\"customer\": \"cus_42\"} -> {\"charges\": [{\"customer\": \"cus_42\", \"amount\": 120, \"description\": \"November invoice\", \"id\": \"ch_1\"}]}\ncharge {\"customer\": \"cus_42\", \"amount\": 120, \"description\": \"November invoice\"} -> {\"ok\": true, \"id\": \"ch_2\"}\nfind_emails {\"to\": \"ana@example.com\"} -> {\"emails\": []}\nsend_email {\"to\": \"ana@example.com\", \"subject\": \"Invoice for November\", \"body\": \"Dear Ana Silva,\\n\\nThank you for your payment of \\u00a3120 for November.\\n\\nSincerely,\\nOperations\"} -> {\"ok\": true, \"id\": \"em_3\"}\nwrite_file {\"path\": \"invoices/cus_42-nov.txt\", \"content\": \"Customer: Ana Silva (cus_42)\\nAmount: \\u00a3120\\nDescription: November invoice\\nDate: 2024-01-29\\nInvoice ID: inv_42-nov\"} -> {\"ok\": true, \"id\": \"fi_4\"}\ndone: Charged cus_42 \u00a3120, emailed a receipt to ana@example.com, and saved the invoice to invoices/cus_42-nov.txt.\n"
+      }
+    ],
+    "calls": [
+      {
+        "n": 1,
+        "attempt": 1,
+        "tool": "lookup_customer",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 2,
+        "attempt": 1,
+        "tool": "find_charges",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 3,
+        "attempt": 1,
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": "crash-after"
+      },
+      {
+        "n": 4,
+        "attempt": 2,
+        "tool": "lookup_customer",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 5,
+        "attempt": 2,
+        "tool": "find_charges",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 6,
+        "attempt": 2,
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 7,
+        "attempt": 2,
+        "tool": "find_emails",
+        "args": {
+          "to": "ana@example.com"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 8,
+        "attempt": 2,
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Invoice for November",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November.\n\nSincerely,\nOperations"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 9,
+        "attempt": 2,
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-01-29\nInvoice ID: inv_42-nov"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      }
+    ],
+    "effects": [
+      {
+        "id": "ch_1",
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "call": 3,
+        "attempt": 1
+      },
+      {
+        "id": "ch_2",
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "call": 6,
+        "attempt": 2
+      },
+      {
+        "id": "em_3",
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Invoice for November",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November.\n\nSincerely,\nOperations"
+        },
+        "call": 8,
+        "attempt": 2
+      },
+      {
+        "id": "fi_4",
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-01-29\nInvoice ID: inv_42-nov"
+        },
+        "call": 9,
+        "attempt": 2
+      }
+    ]
+  },
+  {
+    "faults": [
+      "timeout@3"
+    ],
+    "fault_tools": [
+      "charge"
+    ],
+    "all_fired": true,
+    "passed": true,
+    "problems": [],
+    "attempts": [
+      {
+        "attempt": 1,
+        "exit": 0,
+        "killed": false,
+        "output": "lookup_customer {\"customer\": \"cus_42\"} -> {\"customer\": \"cus_42\", \"name\": \"Ana Silva\", \"email\": \"ana@example.com\"}\nfind_charges {\"customer\": \"cus_42\"} -> {\"charges\": []}\ncharge {\"customer\": \"cus_42\", \"amount\": 120, \"description\": \"November invoice\"} -> {\"error\": \"request timed out\", \"status\": 504}\nfind_charges {\"customer\": \"cus_42\"} -> {\"charges\": [{\"customer\": \"cus_42\", \"amount\": 120, \"description\": \"November invoice\", \"id\": \"ch_1\"}]}\nfind_emails {\"to\": \"ana@example.com\"} -> {\"emails\": []}\nsend_email {\"to\": \"ana@example.com\", \"subject\": \"Receipt for November Invoice\", \"body\": \"Dear Ana Silva,\\n\\nThank you for your payment of \\u00a3120 for November. Please find attached a copy of your invoice.\\n\\nSincerely,\\nAccounts Team\"} -> {\"ok\": true, \"id\": \"em_2\"}\nwrite_file {\"path\": \"invoices/cus_42-nov.txt\", \"content\": \"Customer: Ana Silva (cus_42)\\nAmount: \\u00a3120\\nDescription: November invoice\\nDate: 2024-01-03\"} -> {\"ok\": true, \"id\": \"fi_3\"}\ndone: Charged cus_42 \u00a3120, emailed receipt to ana@example.com, and saved invoice to invoices/cus_42-nov.txt.\n"
+      }
+    ],
+    "calls": [
+      {
+        "n": 1,
+        "attempt": 1,
+        "tool": "lookup_customer",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 2,
+        "attempt": 1,
+        "tool": "find_charges",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 3,
+        "attempt": 1,
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": "timeout"
+      },
+      {
+        "n": 4,
+        "attempt": 1,
+        "tool": "find_charges",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 5,
+        "attempt": 1,
+        "tool": "find_emails",
+        "args": {
+          "to": "ana@example.com"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 6,
+        "attempt": 1,
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached a copy of your invoice.\n\nSincerely,\nAccounts Team"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 7,
+        "attempt": 1,
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-01-03"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      }
+    ],
+    "effects": [
+      {
+        "id": "ch_1",
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "call": 3,
+        "attempt": 1
+      },
+      {
+        "id": "em_2",
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached a copy of your invoice.\n\nSincerely,\nAccounts Team"
+        },
+        "call": 6,
+        "attempt": 1
+      },
+      {
+        "id": "fi_3",
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-01-03"
+        },
+        "call": 7,
+        "attempt": 1
+      }
+    ]
+  },
+  {
+    "faults": [
+      "error@3"
+    ],
+    "fault_tools": [
+      "charge"
+    ],
+    "all_fired": true,
+    "passed": true,
+    "problems": [],
+    "attempts": [
+      {
+        "attempt": 1,
+        "exit": 0,
+        "killed": false,
+        "output": "lookup_customer {\"customer\": \"cus_42\"} -> {\"customer\": \"cus_42\", \"name\": \"Ana Silva\", \"email\": \"ana@example.com\"}\nfind_charges {\"customer\": \"cus_42\"} -> {\"charges\": []}\ncharge {\"customer\": \"cus_42\", \"amount\": 120, \"description\": \"November invoice\"} -> {\"error\": \"service unavailable, try again\", \"status\": 503}\ncharge {\"customer\": \"cus_42\", \"amount\": 120, \"description\": \"November invoice\"} -> {\"ok\": true, \"id\": \"ch_1\"}\nfind_emails {\"to\": \"ana@example.com\"} -> {\"emails\": []}\nsend_email {\"to\": \"ana@example.com\", \"subject\": \"Invoice for November\", \"body\": \"Dear Ana Silva,\\n\\nThank you for your payment of \\u00a3120 for November. A copy of your invoice is attached.\\n\\nSincerely,\\nOperations Team\"} -> {\"ok\": true, \"id\": \"em_2\"}\nwrite_file {\"path\": \"invoices/cus_42-nov.txt\", \"content\": \"Invoice for cus_42, amount \\u00a3120, November\"} -> {\"ok\": true, \"id\": \"fi_3\"}\ndone: Charged cus_42 \u00a3120, emailed receipt to ana@example.com, and saved invoice to invoices/cus_42-nov.txt.\n"
+      }
+    ],
+    "calls": [
+      {
+        "n": 1,
+        "attempt": 1,
+        "tool": "lookup_customer",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 2,
+        "attempt": 1,
+        "tool": "find_charges",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 3,
+        "attempt": 1,
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": "error"
+      },
+      {
+        "n": 4,
+        "attempt": 1,
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 5,
+        "attempt": 1,
+        "tool": "find_emails",
+        "args": {
+          "to": "ana@example.com"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 6,
+        "attempt": 1,
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Invoice for November",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. A copy of your invoice is attached.\n\nSincerely,\nOperations Team"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 7,
+        "attempt": 1,
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Invoice for cus_42, amount \u00a3120, November"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      }
+    ],
+    "effects": [
+      {
+        "id": "ch_1",
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "call": 4,
+        "attempt": 1
+      },
+      {
+        "id": "em_2",
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Invoice for November",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. A copy of your invoice is attached.\n\nSincerely,\nOperations Team"
+        },
+        "call": 6,
+        "attempt": 1
+      },
+      {
+        "id": "fi_3",
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Invoice for cus_42, amount \u00a3120, November"
+        },
+        "call": 7,
+        "attempt": 1
+      }
+    ]
+  },
+  {
+    "faults": [
+      "crash-before@4"
+    ],
+    "fault_tools": [
+      "find_emails"
+    ],
+    "all_fired": true,
+    "passed": false,
+    "problems": [
+      {
+        "kind": "duplicate",
+        "text": "did 2 times, should be once: charge cus_42 120"
+      }
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "exit": -9,
+        "killed": true,
+        "output": ""
+      },
+      {
+        "attempt": 2,
+        "exit": 0,
+        "killed": false,
+        "output": "lookup_customer {\"customer\": \"cus_42\"} -> {\"customer\": \"cus_42\", \"name\": \"Ana Silva\", \"email\": \"ana@example.com\"}\nfind_charges {\"customer\": \"cus_42\"} -> {\"charges\": [{\"customer\": \"cus_42\", \"amount\": 120, \"description\": \"November invoice\", \"id\": \"ch_1\"}]}\ncharge {\"customer\": \"cus_42\", \"amount\": 120, \"description\": \"November invoice\"} -> {\"ok\": true, \"id\": \"ch_2\"}\nfind_emails {\"to\": \"ana@example.com\"} -> {\"emails\": []}\nsend_email {\"to\": \"ana@example.com\", \"subject\": \"Invoice for November\", \"body\": \"Dear Ana Silva,\\n\\nThank you for your payment of \\u00a3120 for November.\\n\\nSincerely,\\nOperations\"} -> {\"ok\": true, \"id\": \"em_3\"}\nwrite_file {\"path\": \"invoices/cus_42-nov.txt\", \"content\": \"Customer: Ana Silva (cus_42)\\nAmount: \\u00a3120\\nDescription: November invoice\\nDate: 2024-01-29\\nInvoice ID: inv_42-nov\"} -> {\"ok\": true, \"id\": \"fi_4\"}\ndone: Charged cus_42 \u00a3120, emailed a receipt to ana@example.com, and saved the invoice to invoices/cus_42-nov.txt.\n"
+      }
+    ],
+    "calls": [
+      {
+        "n": 1,
+        "attempt": 1,
+        "tool": "lookup_customer",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 2,
+        "attempt": 1,
+        "tool": "find_charges",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 3,
+        "attempt": 1,
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 4,
+        "attempt": 1,
+        "tool": "find_emails",
+        "args": {
+          "to": "ana@example.com"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": "crash-before"
+      },
+      {
+        "n": 5,
+        "attempt": 2,
+        "tool": "lookup_customer",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 6,
+        "attempt": 2,
+        "tool": "find_charges",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 7,
+        "attempt": 2,
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 8,
+        "attempt": 2,
+        "tool": "find_emails",
+        "args": {
+          "to": "ana@example.com"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 9,
+        "attempt": 2,
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Invoice for November",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November.\n\nSincerely,\nOperations"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 10,
+        "attempt": 2,
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-01-29\nInvoice ID: inv_42-nov"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      }
+    ],
+    "effects": [
+      {
+        "id": "ch_1",
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "call": 3,
+        "attempt": 1
+      },
+      {
+        "id": "ch_2",
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "call": 7,
+        "attempt": 2
+      },
+      {
+        "id": "em_3",
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Invoice for November",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November.\n\nSincerely,\nOperations"
+        },
+        "call": 9,
+        "attempt": 2
+      },
+      {
+        "id": "fi_4",
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-01-29\nInvoice ID: inv_42-nov"
+        },
+        "call": 10,
+        "attempt": 2
+      }
+    ]
+  },
+  {
+    "faults": [
+      "crash-after@4"
+    ],
+    "fault_tools": [
+      "find_emails"
+    ],
+    "all_fired": true,
+    "passed": false,
+    "problems": [
+      {
+        "kind": "duplicate",
+        "text": "did 2 times, should be once: charge cus_42 120"
+      }
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "exit": -9,
+        "killed": true,
+        "output": ""
+      },
+      {
+        "attempt": 2,
+        "exit": 0,
+        "killed": false,
+        "output": "lookup_customer {\"customer\": \"cus_42\"} -> {\"customer\": \"cus_42\", \"name\": \"Ana Silva\", \"email\": \"ana@example.com\"}\nfind_charges {\"customer\": \"cus_42\"} -> {\"charges\": [{\"customer\": \"cus_42\", \"amount\": 120, \"description\": \"November invoice\", \"id\": \"ch_1\"}]}\ncharge {\"customer\": \"cus_42\", \"amount\": 120, \"description\": \"November invoice\"} -> {\"ok\": true, \"id\": \"ch_2\"}\nfind_emails {\"to\": \"ana@example.com\"} -> {\"emails\": []}\nsend_email {\"to\": \"ana@example.com\", \"subject\": \"Invoice for November\", \"body\": \"Dear Ana Silva,\\n\\nThank you for your payment of \\u00a3120 for November.\\n\\nSincerely,\\nOperations\"} -> {\"ok\": true, \"id\": \"em_3\"}\nwrite_file {\"path\": \"invoices/cus_42-nov.txt\", \"content\": \"Customer: Ana Silva (cus_42)\\nAmount: \\u00a3120\\nDescription: November invoice\\nDate: 2024-01-29\\nInvoice ID: inv_42-nov\"} -> {\"ok\": true, \"id\": \"fi_4\"}\ndone: Charged cus_42 \u00a3120, emailed a receipt to ana@example.com, and saved the invoice to invoices/cus_42-nov.txt.\n"
+      }
+    ],
+    "calls": [
+      {
+        "n": 1,
+        "attempt": 1,
+        "tool": "lookup_customer",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 2,
+        "attempt": 1,
+        "tool": "find_charges",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 3,
+        "attempt": 1,
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 4,
+        "attempt": 1,
+        "tool": "find_emails",
+        "args": {
+          "to": "ana@example.com"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": "crash-after"
+      },
+      {
+        "n": 5,
+        "attempt": 2,
+        "tool": "lookup_customer",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 6,
+        "attempt": 2,
+        "tool": "find_charges",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 7,
+        "attempt": 2,
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 8,
+        "attempt": 2,
+        "tool": "find_emails",
+        "args": {
+          "to": "ana@example.com"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 9,
+        "attempt": 2,
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Invoice for November",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November.\n\nSincerely,\nOperations"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 10,
+        "attempt": 2,
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-01-29\nInvoice ID: inv_42-nov"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      }
+    ],
+    "effects": [
+      {
+        "id": "ch_1",
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "call": 3,
+        "attempt": 1
+      },
+      {
+        "id": "ch_2",
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "call": 7,
+        "attempt": 2
+      },
+      {
+        "id": "em_3",
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Invoice for November",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November.\n\nSincerely,\nOperations"
+        },
+        "call": 9,
+        "attempt": 2
+      },
+      {
+        "id": "fi_4",
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-01-29\nInvoice ID: inv_42-nov"
+        },
+        "call": 10,
+        "attempt": 2
+      }
+    ]
+  },
+  {
+    "faults": [
+      "timeout@4"
+    ],
+    "fault_tools": [
+      "find_emails"
+    ],
+    "all_fired": true,
+    "passed": true,
+    "problems": [],
+    "attempts": [
+      {
+        "attempt": 1,
+        "exit": 0,
+        "killed": false,
+        "output": "lookup_customer {\"customer\": \"cus_42\"} -> {\"customer\": \"cus_42\", \"name\": \"Ana Silva\", \"email\": \"ana@example.com\"}\nfind_charges {\"customer\": \"cus_42\"} -> {\"charges\": []}\ncharge {\"customer\": \"cus_42\", \"amount\": 120, \"description\": \"November invoice\"} -> {\"ok\": true, \"id\": \"ch_1\"}\nfind_emails {\"to\": \"ana@example.com\"} -> {\"error\": \"request timed out\", \"status\": 504}\nsend_email {\"to\": \"ana@example.com\", \"subject\": \"Receipt for November Invoice\", \"body\": \"Dear Ana Silva,\\n\\nThank you for your payment of \\u00a3120 for November. Please find attached your receipt.\\n\\nSincerely,\\nOperations Team\"} -> {\"ok\": true, \"id\": \"em_2\"}\nwrite_file {\"path\": \"invoices/cus_42-nov.txt\", \"content\": \"Customer: Ana Silva (cus_42)\\nAmount: \\u00a3120\\nDescription: November invoice\\nDate: 2024-02-29\\n\"} -> {\"ok\": true, \"id\": \"fi_3\"}\ndone: Charged cus_42 \u00a3120, emailed receipt to ana@example.com, and saved invoice to invoices/cus_42-nov.txt.\n"
+      }
+    ],
+    "calls": [
+      {
+        "n": 1,
+        "attempt": 1,
+        "tool": "lookup_customer",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 2,
+        "attempt": 1,
+        "tool": "find_charges",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 3,
+        "attempt": 1,
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 4,
+        "attempt": 1,
+        "tool": "find_emails",
+        "args": {
+          "to": "ana@example.com"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": "timeout"
+      },
+      {
+        "n": 5,
+        "attempt": 1,
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached your receipt.\n\nSincerely,\nOperations Team"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 6,
+        "attempt": 1,
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-02-29\n"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      }
+    ],
+    "effects": [
+      {
+        "id": "ch_1",
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "call": 3,
+        "attempt": 1
+      },
+      {
+        "id": "em_2",
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached your receipt.\n\nSincerely,\nOperations Team"
+        },
+        "call": 5,
+        "attempt": 1
+      },
+      {
+        "id": "fi_3",
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-02-29\n"
+        },
+        "call": 6,
+        "attempt": 1
+      }
+    ]
+  },
+  {
+    "faults": [
+      "error@4"
+    ],
+    "fault_tools": [
+      "find_emails"
+    ],
+    "all_fired": true,
+    "passed": true,
+    "problems": [],
+    "attempts": [
+      {
+        "attempt": 1,
+        "exit": 0,
+        "killed": false,
+        "output": "lookup_customer {\"customer\": \"cus_42\"} -> {\"customer\": \"cus_42\", \"name\": \"Ana Silva\", \"email\": \"ana@example.com\"}\nfind_charges {\"customer\": \"cus_42\"} -> {\"charges\": []}\ncharge {\"customer\": \"cus_42\", \"amount\": 120, \"description\": \"November invoice\"} -> {\"ok\": true, \"id\": \"ch_1\"}\nfind_emails {\"to\": \"ana@example.com\"} -> {\"error\": \"service unavailable, try again\", \"status\": 503}\nfind_emails {\"to\": \"ana@example.com\"} -> {\"emails\": []}\nsend_email {\"to\": \"ana@example.com\", \"subject\": \"Receipt for November Invoice\", \"body\": \"Dear Ana Silva,\\n\\nThank you for your payment of \\u00a3120 for November. Please find attached a copy of your invoice.\\n\\nSincerely,\\nOperations Team\"} -> {\"ok\": true, \"id\": \"em_2\"}\nwrite_file {\"path\": \"invoices/cus_42-nov.txt\", \"content\": \"Customer: Ana Silva (cus_42)\\nAmount: \\u00a3120\\nDescription: November invoice\\nDate: 2024-01-29\"} -> {\"ok\": true, \"id\": \"fi_3\"}\ndone: Charged cus_42 \u00a3120, emailed receipt to ana@example.com, and saved invoice to invoices/cus_42-nov.txt.\n"
+      }
+    ],
+    "calls": [
+      {
+        "n": 1,
+        "attempt": 1,
+        "tool": "lookup_customer",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 2,
+        "attempt": 1,
+        "tool": "find_charges",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 3,
+        "attempt": 1,
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 4,
+        "attempt": 1,
+        "tool": "find_emails",
+        "args": {
+          "to": "ana@example.com"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": "error"
+      },
+      {
+        "n": 5,
+        "attempt": 1,
+        "tool": "find_emails",
+        "args": {
+          "to": "ana@example.com"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 6,
+        "attempt": 1,
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached a copy of your invoice.\n\nSincerely,\nOperations Team"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 7,
+        "attempt": 1,
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-01-29"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      }
+    ],
+    "effects": [
+      {
+        "id": "ch_1",
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "call": 3,
+        "attempt": 1
+      },
+      {
+        "id": "em_2",
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached a copy of your invoice.\n\nSincerely,\nOperations Team"
+        },
+        "call": 6,
+        "attempt": 1
+      },
+      {
+        "id": "fi_3",
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-01-29"
+        },
+        "call": 7,
+        "attempt": 1
+      }
+    ]
+  },
+  {
+    "faults": [
+      "crash-before@5"
+    ],
+    "fault_tools": [
+      "send_email"
+    ],
+    "all_fired": true,
+    "passed": false,
+    "problems": [
+      {
+        "kind": "duplicate",
+        "text": "did 2 times, should be once: charge cus_42 120"
+      }
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "exit": -9,
+        "killed": true,
+        "output": ""
+      },
+      {
+        "attempt": 2,
+        "exit": 0,
+        "killed": false,
+        "output": "lookup_customer {\"customer\": \"cus_42\"} -> {\"customer\": \"cus_42\", \"name\": \"Ana Silva\", \"email\": \"ana@example.com\"}\nfind_charges {\"customer\": \"cus_42\"} -> {\"charges\": [{\"customer\": \"cus_42\", \"amount\": 120, \"description\": \"November invoice\", \"id\": \"ch_1\"}]}\ncharge {\"customer\": \"cus_42\", \"amount\": 120, \"description\": \"November invoice\"} -> {\"ok\": true, \"id\": \"ch_2\"}\nfind_emails {\"to\": \"ana@example.com\"} -> {\"emails\": []}\nsend_email {\"to\": \"ana@example.com\", \"subject\": \"Invoice for November\", \"body\": \"Dear Ana Silva,\\n\\nThank you for your payment of \\u00a3120 for November.\\n\\nSincerely,\\nOperations\"} -> {\"ok\": true, \"id\": \"em_3\"}\nwrite_file {\"path\": \"invoices/cus_42-nov.txt\", \"content\": \"Customer: Ana Silva (cus_42)\\nAmount: \\u00a3120\\nDescription: November invoice\\nDate: 2024-01-29\\nInvoice ID: inv_42-nov\"} -> {\"ok\": true, \"id\": \"fi_4\"}\ndone: Charged cus_42 \u00a3120, emailed a receipt to ana@example.com, and saved the invoice to invoices/cus_42-nov.txt.\n"
+      }
+    ],
+    "calls": [
+      {
+        "n": 1,
+        "attempt": 1,
+        "tool": "lookup_customer",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 2,
+        "attempt": 1,
+        "tool": "find_charges",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 3,
+        "attempt": 1,
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 4,
+        "attempt": 1,
+        "tool": "find_emails",
+        "args": {
+          "to": "ana@example.com"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 5,
+        "attempt": 1,
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached a copy of your invoice.\n\nSincerely,\nOperations Team"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": "crash-before"
+      },
+      {
+        "n": 6,
+        "attempt": 2,
+        "tool": "lookup_customer",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 7,
+        "attempt": 2,
+        "tool": "find_charges",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 8,
+        "attempt": 2,
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 9,
+        "attempt": 2,
+        "tool": "find_emails",
+        "args": {
+          "to": "ana@example.com"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 10,
+        "attempt": 2,
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Invoice for November",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November.\n\nSincerely,\nOperations"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 11,
+        "attempt": 2,
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-01-29\nInvoice ID: inv_42-nov"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      }
+    ],
+    "effects": [
+      {
+        "id": "ch_1",
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "call": 3,
+        "attempt": 1
+      },
+      {
+        "id": "ch_2",
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "call": 8,
+        "attempt": 2
+      },
+      {
+        "id": "em_3",
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Invoice for November",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November.\n\nSincerely,\nOperations"
+        },
+        "call": 10,
+        "attempt": 2
+      },
+      {
+        "id": "fi_4",
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-01-29\nInvoice ID: inv_42-nov"
+        },
+        "call": 11,
+        "attempt": 2
+      }
+    ]
+  },
+  {
+    "faults": [
+      "crash-after@5"
+    ],
+    "fault_tools": [
+      "send_email"
+    ],
+    "all_fired": true,
+    "passed": false,
+    "problems": [
+      {
+        "kind": "duplicate",
+        "text": "did 2 times, should be once: charge cus_42 120"
+      },
+      {
+        "kind": "duplicate",
+        "text": "did 2 times, should be once: email ana@example.com"
+      }
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "exit": -9,
+        "killed": true,
+        "output": ""
+      },
+      {
+        "attempt": 2,
+        "exit": 0,
+        "killed": false,
+        "output": "lookup_customer {\"customer\": \"cus_42\"} -> {\"customer\": \"cus_42\", \"name\": \"Ana Silva\", \"email\": \"ana@example.com\"}\nfind_charges {\"customer\": \"cus_42\"} -> {\"charges\": [{\"customer\": \"cus_42\", \"amount\": 120, \"description\": \"November invoice\", \"id\": \"ch_1\"}]}\ncharge {\"customer\": \"cus_42\", \"amount\": 120, \"description\": \"November invoice\"} -> {\"ok\": true, \"id\": \"ch_3\"}\nfind_emails {\"to\": \"ana@example.com\"} -> {\"emails\": [{\"to\": \"ana@example.com\", \"subject\": \"Receipt for November Invoice\", \"body\": \"Dear Ana Silva,\\n\\nThank you for your payment of \\u00a3120 for November. Please find attached a copy of your invoice.\\n\\nSincerely,\\nOperations Team\", \"id\": \"em_2\"}]}\nsend_email {\"to\": \"ana@example.com\", \"subject\": \"Receipt for November Invoice\", \"body\": \"Dear Ana Silva,\\n\\nThank you for your payment of \\u00a3120 for November. Please find attached a copy of your invoice.\\n\\nSincerely,\\nOperations Team\"} -> {\"ok\": true, \"id\": \"em_4\"}\nwrite_file {\"path\": \"invoices/cus_42-nov.txt\", \"content\": \"Customer: Ana Silva (cus_42)\\nAmount: \\u00a3120\\nDescription: November invoice\\nDate: 2024-01-03\\nInvoice ID: inv_cus42_nov\"} -> {\"ok\": true, \"id\": \"fi_5\"}\ndone: Charged Ana Silva, sent a receipt email, and saved the invoice to invoices/cus_42-nov.txt.\n"
+      }
+    ],
+    "calls": [
+      {
+        "n": 1,
+        "attempt": 1,
+        "tool": "lookup_customer",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 2,
+        "attempt": 1,
+        "tool": "find_charges",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 3,
+        "attempt": 1,
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 4,
+        "attempt": 1,
+        "tool": "find_emails",
+        "args": {
+          "to": "ana@example.com"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 5,
+        "attempt": 1,
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached a copy of your invoice.\n\nSincerely,\nOperations Team"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": "crash-after"
+      },
+      {
+        "n": 6,
+        "attempt": 2,
+        "tool": "lookup_customer",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 7,
+        "attempt": 2,
+        "tool": "find_charges",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 8,
+        "attempt": 2,
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 9,
+        "attempt": 2,
+        "tool": "find_emails",
+        "args": {
+          "to": "ana@example.com"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 10,
+        "attempt": 2,
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached a copy of your invoice.\n\nSincerely,\nOperations Team"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 11,
+        "attempt": 2,
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-01-03\nInvoice ID: inv_cus42_nov"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      }
+    ],
+    "effects": [
+      {
+        "id": "ch_1",
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "call": 3,
+        "attempt": 1
+      },
+      {
+        "id": "em_2",
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached a copy of your invoice.\n\nSincerely,\nOperations Team"
+        },
+        "call": 5,
+        "attempt": 1
+      },
+      {
+        "id": "ch_3",
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "call": 8,
+        "attempt": 2
+      },
+      {
+        "id": "em_4",
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached a copy of your invoice.\n\nSincerely,\nOperations Team"
+        },
+        "call": 10,
+        "attempt": 2
+      },
+      {
+        "id": "fi_5",
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-01-03\nInvoice ID: inv_cus42_nov"
+        },
+        "call": 11,
+        "attempt": 2
+      }
+    ]
+  },
+  {
+    "faults": [
+      "timeout@5"
+    ],
+    "fault_tools": [
+      "send_email"
+    ],
+    "all_fired": true,
+    "passed": false,
+    "problems": [
+      {
+        "kind": "duplicate",
+        "text": "did 2 times, should be once: email ana@example.com"
+      }
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "exit": 0,
+        "killed": false,
+        "output": "lookup_customer {\"customer\": \"cus_42\"} -> {\"customer\": \"cus_42\", \"name\": \"Ana Silva\", \"email\": \"ana@example.com\"}\nfind_charges {\"customer\": \"cus_42\"} -> {\"charges\": []}\ncharge {\"customer\": \"cus_42\", \"amount\": 120, \"description\": \"November invoice\"} -> {\"ok\": true, \"id\": \"ch_1\"}\nfind_emails {\"to\": \"ana@example.com\"} -> {\"emails\": []}\nsend_email {\"to\": \"ana@example.com\", \"subject\": \"Receipt for November Invoice\", \"body\": \"Dear Ana Silva,\\n\\nThank you for your payment of \\u00a3120 for November. Please find attached a copy of your invoice.\\n\\nSincerely,\\nOperations Team\"} -> {\"error\": \"request timed out\", \"status\": 504}\nsend_email {\"to\": \"ana@example.com\", \"subject\": \"Receipt for November Invoice\", \"body\": \"Dear Ana Silva,\\n\\nThank you for your payment of \\u00a3120 for November. Please find attached a copy of your invoice.\\n\\nSincerely,\\nOperations Team\"} -> {\"ok\": true, \"id\": \"em_3\"}\nwrite_file {\"path\": \"invoices/cus_42-nov.txt\", \"content\": \"Customer: Ana Silva (cus_42)\\nAmount: \\u00a3120\\nDescription: November invoice\\nDate: 2024-02-29\"} -> {\"ok\": true, \"id\": \"fi_4\"}\ndone: Charged cus_42 \u00a3120, emailed receipt to ana@example.com, and saved invoice to invoices/cus_42-nov.txt.\n"
+      }
+    ],
+    "calls": [
+      {
+        "n": 1,
+        "attempt": 1,
+        "tool": "lookup_customer",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 2,
+        "attempt": 1,
+        "tool": "find_charges",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 3,
+        "attempt": 1,
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 4,
+        "attempt": 1,
+        "tool": "find_emails",
+        "args": {
+          "to": "ana@example.com"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 5,
+        "attempt": 1,
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached a copy of your invoice.\n\nSincerely,\nOperations Team"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": "timeout"
+      },
+      {
+        "n": 6,
+        "attempt": 1,
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached a copy of your invoice.\n\nSincerely,\nOperations Team"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 7,
+        "attempt": 1,
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-02-29"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      }
+    ],
+    "effects": [
+      {
+        "id": "ch_1",
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "call": 3,
+        "attempt": 1
+      },
+      {
+        "id": "em_2",
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached a copy of your invoice.\n\nSincerely,\nOperations Team"
+        },
+        "call": 5,
+        "attempt": 1
+      },
+      {
+        "id": "em_3",
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached a copy of your invoice.\n\nSincerely,\nOperations Team"
+        },
+        "call": 6,
+        "attempt": 1
+      },
+      {
+        "id": "fi_4",
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-02-29"
+        },
+        "call": 7,
+        "attempt": 1
+      }
+    ]
+  },
+  {
+    "faults": [
+      "error@5"
+    ],
+    "fault_tools": [
+      "send_email"
+    ],
+    "all_fired": true,
+    "passed": true,
+    "problems": [],
+    "attempts": [
+      {
+        "attempt": 1,
+        "exit": 0,
+        "killed": false,
+        "output": "lookup_customer {\"customer\": \"cus_42\"} -> {\"customer\": \"cus_42\", \"name\": \"Ana Silva\", \"email\": \"ana@example.com\"}\nfind_charges {\"customer\": \"cus_42\"} -> {\"charges\": []}\ncharge {\"customer\": \"cus_42\", \"amount\": 120, \"description\": \"November invoice\"} -> {\"ok\": true, \"id\": \"ch_1\"}\nfind_emails {\"to\": \"ana@example.com\"} -> {\"emails\": []}\nsend_email {\"to\": \"ana@example.com\", \"subject\": \"Receipt for November Invoice\", \"body\": \"Dear Ana Silva,\\n\\nThank you for your payment of \\u00a3120 for November. Please find attached a copy of your invoice.\\n\\nSincerely,\\nOperations Team\"} -> {\"error\": \"service unavailable, try again\", \"status\": 503}\nsend_email {\"to\": \"ana@example.com\", \"subject\": \"Receipt for November Invoice\", \"body\": \"Dear Ana Silva,\\n\\nThank you for your payment of \\u00a3120 for November. Please find attached a copy of your invoice.\\n\\nSincerely,\\nOperations Team\"} -> {\"ok\": true, \"id\": \"em_2\"}\nwrite_file {\"path\": \"invoices/cus_42-nov.txt\", \"content\": \"Customer: Ana Silva (cus_42)\\nAmount: \\u00a3120\\nDescription: November invoice\\nDate: 2024-01-29\"} -> {\"ok\": true, \"id\": \"fi_3\"}\ndone: Charged cus_42 \u00a3120, emailed receipt to ana@example.com, and saved invoice to invoices/cus_42-nov.txt.\n"
+      }
+    ],
+    "calls": [
+      {
+        "n": 1,
+        "attempt": 1,
+        "tool": "lookup_customer",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 2,
+        "attempt": 1,
+        "tool": "find_charges",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 3,
+        "attempt": 1,
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 4,
+        "attempt": 1,
+        "tool": "find_emails",
+        "args": {
+          "to": "ana@example.com"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 5,
+        "attempt": 1,
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached a copy of your invoice.\n\nSincerely,\nOperations Team"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": "error"
+      },
+      {
+        "n": 6,
+        "attempt": 1,
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached a copy of your invoice.\n\nSincerely,\nOperations Team"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 7,
+        "attempt": 1,
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-01-29"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      }
+    ],
+    "effects": [
+      {
+        "id": "ch_1",
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "call": 3,
+        "attempt": 1
+      },
+      {
+        "id": "em_2",
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached a copy of your invoice.\n\nSincerely,\nOperations Team"
+        },
+        "call": 6,
+        "attempt": 1
+      },
+      {
+        "id": "fi_3",
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-01-29"
+        },
+        "call": 7,
+        "attempt": 1
+      }
+    ]
+  },
+  {
+    "faults": [
+      "crash-before@6"
+    ],
+    "fault_tools": [
+      "write_file"
+    ],
+    "all_fired": true,
+    "passed": false,
+    "problems": [
+      {
+        "kind": "duplicate",
+        "text": "did 2 times, should be once: charge cus_42 120"
+      },
+      {
+        "kind": "duplicate",
+        "text": "did 2 times, should be once: email ana@example.com"
+      }
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "exit": -9,
+        "killed": true,
+        "output": ""
+      },
+      {
+        "attempt": 2,
+        "exit": 0,
+        "killed": false,
+        "output": "lookup_customer {\"customer\": \"cus_42\"} -> {\"customer\": \"cus_42\", \"name\": \"Ana Silva\", \"email\": \"ana@example.com\"}\nfind_charges {\"customer\": \"cus_42\"} -> {\"charges\": [{\"customer\": \"cus_42\", \"amount\": 120, \"description\": \"November invoice\", \"id\": \"ch_1\"}]}\ncharge {\"customer\": \"cus_42\", \"amount\": 120, \"description\": \"November invoice\"} -> {\"ok\": true, \"id\": \"ch_3\"}\nfind_emails {\"to\": \"ana@example.com\"} -> {\"emails\": [{\"to\": \"ana@example.com\", \"subject\": \"Receipt for November Invoice\", \"body\": \"Dear Ana Silva,\\n\\nThank you for your payment of \\u00a3120 for November. Please find attached a copy of your invoice.\\n\\nSincerely,\\nOperations Team\", \"id\": \"em_2\"}]}\nsend_email {\"to\": \"ana@example.com\", \"subject\": \"Receipt for November Invoice\", \"body\": \"Dear Ana Silva,\\n\\nThank you for your payment of \\u00a3120 for November. Please find attached a copy of your invoice.\\n\\nSincerely,\\nOperations Team\"} -> {\"ok\": true, \"id\": \"em_4\"}\nwrite_file {\"path\": \"invoices/cus_42-nov.txt\", \"content\": \"Customer: Ana Silva (cus_42)\\nAmount: \\u00a3120\\nDescription: November invoice\\nDate: 2024-01-03\\nInvoice ID: inv_cus42_nov\"} -> {\"ok\": true, \"id\": \"fi_5\"}\ndone: Charged Ana Silva, sent a receipt email, and saved the invoice to invoices/cus_42-nov.txt.\n"
+      }
+    ],
+    "calls": [
+      {
+        "n": 1,
+        "attempt": 1,
+        "tool": "lookup_customer",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 2,
+        "attempt": 1,
+        "tool": "find_charges",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 3,
+        "attempt": 1,
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 4,
+        "attempt": 1,
+        "tool": "find_emails",
+        "args": {
+          "to": "ana@example.com"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 5,
+        "attempt": 1,
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached a copy of your invoice.\n\nSincerely,\nOperations Team"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 6,
+        "attempt": 1,
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-01-29"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": "crash-before"
+      },
+      {
+        "n": 7,
+        "attempt": 2,
+        "tool": "lookup_customer",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 8,
+        "attempt": 2,
+        "tool": "find_charges",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 9,
+        "attempt": 2,
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 10,
+        "attempt": 2,
+        "tool": "find_emails",
+        "args": {
+          "to": "ana@example.com"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 11,
+        "attempt": 2,
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached a copy of your invoice.\n\nSincerely,\nOperations Team"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 12,
+        "attempt": 2,
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-01-03\nInvoice ID: inv_cus42_nov"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      }
+    ],
+    "effects": [
+      {
+        "id": "ch_1",
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "call": 3,
+        "attempt": 1
+      },
+      {
+        "id": "em_2",
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached a copy of your invoice.\n\nSincerely,\nOperations Team"
+        },
+        "call": 5,
+        "attempt": 1
+      },
+      {
+        "id": "ch_3",
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "call": 9,
+        "attempt": 2
+      },
+      {
+        "id": "em_4",
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached a copy of your invoice.\n\nSincerely,\nOperations Team"
+        },
+        "call": 11,
+        "attempt": 2
+      },
+      {
+        "id": "fi_5",
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-01-03\nInvoice ID: inv_cus42_nov"
+        },
+        "call": 12,
+        "attempt": 2
+      }
+    ]
+  },
+  {
+    "faults": [
+      "crash-after@6"
+    ],
+    "fault_tools": [
+      "write_file"
+    ],
+    "all_fired": true,
+    "passed": false,
+    "problems": [
+      {
+        "kind": "duplicate",
+        "text": "did 2 times, should be once: charge cus_42 120"
+      },
+      {
+        "kind": "duplicate",
+        "text": "did 2 times, should be once: email ana@example.com"
+      }
+    ],
+    "attempts": [
+      {
+        "attempt": 1,
+        "exit": -9,
+        "killed": true,
+        "output": ""
+      },
+      {
+        "attempt": 2,
+        "exit": 0,
+        "killed": false,
+        "output": "lookup_customer {\"customer\": \"cus_42\"} -> {\"customer\": \"cus_42\", \"name\": \"Ana Silva\", \"email\": \"ana@example.com\"}\nfind_charges {\"customer\": \"cus_42\"} -> {\"charges\": [{\"customer\": \"cus_42\", \"amount\": 120, \"description\": \"November invoice\", \"id\": \"ch_1\"}]}\ncharge {\"customer\": \"cus_42\", \"amount\": 120, \"description\": \"November invoice\"} -> {\"ok\": true, \"id\": \"ch_4\"}\nfind_emails {\"to\": \"ana@example.com\"} -> {\"emails\": [{\"to\": \"ana@example.com\", \"subject\": \"Receipt for November Invoice\", \"body\": \"Dear Ana Silva,\\n\\nThank you for your payment of \\u00a3120 for November. Please find attached a copy of your invoice.\\n\\nSincerely,\\nOperations Team\", \"id\": \"em_2\"}]}\nsend_email {\"to\": \"ana@example.com\", \"subject\": \"Receipt for November Invoice\", \"body\": \"Dear Ana Silva,\\n\\nThank you for your payment of \\u00a3120 for November. Please find attached a copy of your invoice.\\n\\nSincerely,\\nOperations Team\"} -> {\"ok\": true, \"id\": \"em_5\"}\nwrite_file {\"path\": \"invoices/cus_42-nov.txt\", \"content\": \"Customer: Ana Silva (cus_42)\\nAmount: \\u00a3120\\nDescription: November invoice\\nDate: 2024-01-03\\nInvoice ID: inv_cus42_nov\"} -> {\"ok\": true, \"id\": \"fi_6\"}\ndone: Charged Ana Silva, sent a receipt email, and saved the invoice to invoices/cus_42-nov.txt.\n"
+      }
+    ],
+    "calls": [
+      {
+        "n": 1,
+        "attempt": 1,
+        "tool": "lookup_customer",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 2,
+        "attempt": 1,
+        "tool": "find_charges",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 3,
+        "attempt": 1,
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 4,
+        "attempt": 1,
+        "tool": "find_emails",
+        "args": {
+          "to": "ana@example.com"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 5,
+        "attempt": 1,
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached a copy of your invoice.\n\nSincerely,\nOperations Team"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 6,
+        "attempt": 1,
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-01-29"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": "crash-after"
+      },
+      {
+        "n": 7,
+        "attempt": 2,
+        "tool": "lookup_customer",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 8,
+        "attempt": 2,
+        "tool": "find_charges",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 9,
+        "attempt": 2,
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 10,
+        "attempt": 2,
+        "tool": "find_emails",
+        "args": {
+          "to": "ana@example.com"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 11,
+        "attempt": 2,
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached a copy of your invoice.\n\nSincerely,\nOperations Team"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 12,
+        "attempt": 2,
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-01-03\nInvoice ID: inv_cus42_nov"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      }
+    ],
+    "effects": [
+      {
+        "id": "ch_1",
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "call": 3,
+        "attempt": 1
+      },
+      {
+        "id": "em_2",
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached a copy of your invoice.\n\nSincerely,\nOperations Team"
+        },
+        "call": 5,
+        "attempt": 1
+      },
+      {
+        "id": "fi_3",
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-01-29"
+        },
+        "call": 6,
+        "attempt": 1
+      },
+      {
+        "id": "ch_4",
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "call": 9,
+        "attempt": 2
+      },
+      {
+        "id": "em_5",
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached a copy of your invoice.\n\nSincerely,\nOperations Team"
+        },
+        "call": 11,
+        "attempt": 2
+      },
+      {
+        "id": "fi_6",
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-01-03\nInvoice ID: inv_cus42_nov"
+        },
+        "call": 12,
+        "attempt": 2
+      }
+    ]
+  },
+  {
+    "faults": [
+      "timeout@6"
+    ],
+    "fault_tools": [
+      "write_file"
+    ],
+    "all_fired": true,
+    "passed": true,
+    "problems": [],
+    "attempts": [
+      {
+        "attempt": 1,
+        "exit": 0,
+        "killed": false,
+        "output": "lookup_customer {\"customer\": \"cus_42\"} -> {\"customer\": \"cus_42\", \"name\": \"Ana Silva\", \"email\": \"ana@example.com\"}\nfind_charges {\"customer\": \"cus_42\"} -> {\"charges\": []}\ncharge {\"customer\": \"cus_42\", \"amount\": 120, \"description\": \"November invoice\"} -> {\"ok\": true, \"id\": \"ch_1\"}\nfind_emails {\"to\": \"ana@example.com\"} -> {\"emails\": []}\nsend_email {\"to\": \"ana@example.com\", \"subject\": \"Receipt for November Invoice\", \"body\": \"Dear Ana Silva,\\n\\nThank you for your payment of \\u00a3120 for November. Please find attached a copy of your invoice.\\n\\nSincerely,\\nOperations Team\"} -> {\"ok\": true, \"id\": \"em_2\"}\nwrite_file {\"path\": \"invoices/cus_42-nov.txt\", \"content\": \"Customer: Ana Silva (cus_42)\\nAmount: \\u00a3120\\nDescription: November invoice\\nDate: 2024-01-29\"} -> {\"error\": \"request timed out\", \"status\": 504}\nwrite_file {\"path\": \"invoices/cus_42-nov.txt\", \"content\": \"Customer: Ana Silva (cus_42)\\nAmount: \\u00a3120\\nDescription: November invoice\\nDate: 2024-01-29\"} -> {\"ok\": true, \"id\": \"fi_4\"}\ndone: Charged cus_42 \u00a3120, emailed receipt to ana@example.com, and saved invoice to invoices/cus_42-nov.txt.\n"
+      }
+    ],
+    "calls": [
+      {
+        "n": 1,
+        "attempt": 1,
+        "tool": "lookup_customer",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 2,
+        "attempt": 1,
+        "tool": "find_charges",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 3,
+        "attempt": 1,
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 4,
+        "attempt": 1,
+        "tool": "find_emails",
+        "args": {
+          "to": "ana@example.com"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 5,
+        "attempt": 1,
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached a copy of your invoice.\n\nSincerely,\nOperations Team"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 6,
+        "attempt": 1,
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-01-29"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": "timeout"
+      },
+      {
+        "n": 7,
+        "attempt": 1,
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-01-29"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      }
+    ],
+    "effects": [
+      {
+        "id": "ch_1",
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "call": 3,
+        "attempt": 1
+      },
+      {
+        "id": "em_2",
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached a copy of your invoice.\n\nSincerely,\nOperations Team"
+        },
+        "call": 5,
+        "attempt": 1
+      },
+      {
+        "id": "fi_3",
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-01-29"
+        },
+        "call": 6,
+        "attempt": 1
+      },
+      {
+        "id": "fi_4",
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-01-29"
+        },
+        "call": 7,
+        "attempt": 1
+      }
+    ]
+  },
+  {
+    "faults": [
+      "error@6"
+    ],
+    "fault_tools": [
+      "write_file"
+    ],
+    "all_fired": true,
+    "passed": true,
+    "problems": [],
+    "attempts": [
+      {
+        "attempt": 1,
+        "exit": 0,
+        "killed": false,
+        "output": "lookup_customer {\"customer\": \"cus_42\"} -> {\"customer\": \"cus_42\", \"name\": \"Ana Silva\", \"email\": \"ana@example.com\"}\nfind_charges {\"customer\": \"cus_42\"} -> {\"charges\": []}\ncharge {\"customer\": \"cus_42\", \"amount\": 120, \"description\": \"November invoice\"} -> {\"ok\": true, \"id\": \"ch_1\"}\nfind_emails {\"to\": \"ana@example.com\"} -> {\"emails\": []}\nsend_email {\"to\": \"ana@example.com\", \"subject\": \"Receipt for November Invoice\", \"body\": \"Dear Ana Silva,\\n\\nThank you for your payment of \\u00a3120 for November. Please find attached a copy of your invoice.\\n\\nSincerely,\\nOperations Team\"} -> {\"ok\": true, \"id\": \"em_2\"}\nwrite_file {\"path\": \"invoices/cus_42-nov.txt\", \"content\": \"Customer: Ana Silva (cus_42)\\nAmount: \\u00a3120\\nDescription: November invoice\\nDate: 2024-01-29\"} -> {\"error\": \"service unavailable, try again\", \"status\": 503}\nwrite_file {\"path\": \"invoices/cus_42-nov.txt\", \"content\": \"Customer: Ana Silva (cus_42)\\nAmount: \\u00a3120\\nDescription: November invoice\\nDate: 2024-01-29\"} -> {\"ok\": true, \"id\": \"fi_3\"}\ndone: Charged cus_42 \u00a3120, emailed receipt to ana@example.com, and saved invoice to invoices/cus_42-nov.txt.\n"
+      }
+    ],
+    "calls": [
+      {
+        "n": 1,
+        "attempt": 1,
+        "tool": "lookup_customer",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 2,
+        "attempt": 1,
+        "tool": "find_charges",
+        "args": {
+          "customer": "cus_42"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 3,
+        "attempt": 1,
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 4,
+        "attempt": 1,
+        "tool": "find_emails",
+        "args": {
+          "to": "ana@example.com"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 5,
+        "attempt": 1,
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached a copy of your invoice.\n\nSincerely,\nOperations Team"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      },
+      {
+        "n": 6,
+        "attempt": 1,
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-01-29"
+        },
+        "key": null,
+        "applied": false,
+        "replayed": false,
+        "fault": "error"
+      },
+      {
+        "n": 7,
+        "attempt": 1,
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-01-29"
+        },
+        "key": null,
+        "applied": true,
+        "replayed": false,
+        "fault": null
+      }
+    ],
+    "effects": [
+      {
+        "id": "ch_1",
+        "tool": "charge",
+        "args": {
+          "customer": "cus_42",
+          "amount": 120,
+          "description": "November invoice"
+        },
+        "call": 3,
+        "attempt": 1
+      },
+      {
+        "id": "em_2",
+        "tool": "send_email",
+        "args": {
+          "to": "ana@example.com",
+          "subject": "Receipt for November Invoice",
+          "body": "Dear Ana Silva,\n\nThank you for your payment of \u00a3120 for November. Please find attached a copy of your invoice.\n\nSincerely,\nOperations Team"
+        },
+        "call": 5,
+        "attempt": 1
+      },
+      {
+        "id": "fi_3",
+        "tool": "write_file",
+        "args": {
+          "path": "invoices/cus_42-nov.txt",
+          "content": "Customer: Ana Silva (cus_42)\nAmount: \u00a3120\nDescription: November invoice\nDate: 2024-01-29"
+        },
+        "call": 7,
+        "attempt": 1
+      }
+    ]
+  }
+]

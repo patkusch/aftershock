@@ -1,0 +1,35 @@
+PASS  No fault
+PASS  crash-before at call 1 (lookup_customer)
+PASS  crash-after at call 1 (lookup_customer)
+PASS  timeout at call 1 (lookup_customer)
+PASS  error at call 1 (lookup_customer)
+PASS  crash-before at call 2 (find_charges)
+PASS  crash-after at call 2 (find_charges)
+PASS  timeout at call 2 (find_charges)
+PASS  error at call 2 (find_charges)
+PASS  crash-before at call 3 (charge)
+FAIL  crash-after at call 3 (charge): did 2 times, should be once: charge cus_42 120
+PASS  timeout at call 3 (charge)
+PASS  error at call 3 (charge)
+PASS  crash-before at call 4 (find_emails)
+PASS  crash-after at call 4 (find_emails)
+PASS  timeout at call 4 (find_emails)
+PASS  error at call 4 (find_emails)
+PASS  crash-before at call 5 (send_email)
+FAIL  crash-after at call 5 (send_email): did 2 times, should be once: email ana@example.com
+FAIL  timeout at call 5 (send_email): did 2 times, should be once: email ana@example.com
+PASS  error at call 5 (send_email)
+PASS  crash-before at call 6 (write_file)
+PASS  crash-after at call 6 (write_file)
+PASS  timeout at call 6 (write_file)
+PASS  error at call 6 (write_file)
+
+Clean run made 6 tool calls: lookup_customer, find_charges, charge, find_emails, send_email, write_file.
+21 of 24 crash tests passed.
+
+When the service did the work, then the agent was killed before it heard back:
+  FAIL  crash-after at call 3 (charge): did 2 times, should be once: charge cus_42 120
+  FAIL  crash-after at call 5 (send_email): did 2 times, should be once: email ana@example.com
+
+When the service did the work, but the agent was told the call timed out:
+  FAIL  timeout at call 5 (send_email): did 2 times, should be once: email ana@example.com
