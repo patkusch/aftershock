@@ -1,0 +1,43 @@
+PASS  No fault
+PASS  crash-before at call 1 (lookup_customer)
+PASS  crash-after at call 1 (lookup_customer)
+PASS  timeout at call 1 (lookup_customer)
+PASS  error at call 1 (lookup_customer)
+PASS  crash-before at call 2 (find_charges)
+PASS  crash-after at call 2 (find_charges)
+PASS  timeout at call 2 (find_charges)
+PASS  error at call 2 (find_charges)
+PASS  crash-before at call 3 (charge)
+FAIL  crash-after at call 3 (charge): did 2 times, should be once: charge cus_42 120
+PASS  timeout at call 3 (charge)
+PASS  error at call 3 (charge)
+FAIL  crash-before at call 4 (find_emails): did 2 times, should be once: charge cus_42 120
+FAIL  crash-after at call 4 (find_emails): did 2 times, should be once: charge cus_42 120
+PASS  timeout at call 4 (find_emails)
+PASS  error at call 4 (find_emails)
+FAIL  crash-before at call 5 (send_email): did 2 times, should be once: charge cus_42 120
+FAIL  crash-after at call 5 (send_email): did 2 times, should be once: charge cus_42 120
+PASS  timeout at call 5 (send_email)
+FAIL  error at call 5 (send_email): never did: email ana@example.com
+FAIL  crash-before at call 6 (write_file): did 2 times, should be once: charge cus_42 120
+FAIL  crash-after at call 6 (write_file): did 2 times, should be once: charge cus_42 120
+PASS  timeout at call 6 (write_file)
+FAIL  error at call 6 (write_file): never did: write invoices/cus_42-nov.txt
+
+Clean run made 6 tool calls: lookup_customer, find_charges, charge, find_emails, send_email, write_file.
+15 of 24 crash tests passed.
+
+When the agent was killed just before the call reached the service:
+  FAIL  crash-before at call 4 (find_emails): did 2 times, should be once: charge cus_42 120
+  FAIL  crash-before at call 5 (send_email): did 2 times, should be once: charge cus_42 120
+  FAIL  crash-before at call 6 (write_file): did 2 times, should be once: charge cus_42 120
+
+When the service did the work, then the agent was killed before it heard back:
+  FAIL  crash-after at call 3 (charge): did 2 times, should be once: charge cus_42 120
+  FAIL  crash-after at call 4 (find_emails): did 2 times, should be once: charge cus_42 120
+  FAIL  crash-after at call 5 (send_email): did 2 times, should be once: charge cus_42 120
+  FAIL  crash-after at call 6 (write_file): did 2 times, should be once: charge cus_42 120
+
+When the service refused the call once with a temporary error:
+  FAIL  error at call 5 (send_email): never did: email ana@example.com
+  FAIL  error at call 6 (write_file): never did: write invoices/cus_42-nov.txt

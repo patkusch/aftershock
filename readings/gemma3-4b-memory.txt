@@ -1,0 +1,29 @@
+PASS  No fault
+PASS  crash-before at call 1 (lookup_customer)
+PASS  crash-after at call 1 (lookup_customer)
+PASS  timeout at call 1 (lookup_customer)
+PASS  error at call 1 (lookup_customer)
+PASS  crash-before at call 2 (charge)
+FAIL  crash-after at call 2 (charge): did 2 times, should be once: charge cus_42 120
+PASS  timeout at call 2 (charge)
+FAIL  error at call 2 (charge): never did: charge cus_42 120
+PASS  crash-before at call 3 (send_email)
+FAIL  crash-after at call 3 (send_email): did 2 times, should be once: email ana@example.com
+PASS  timeout at call 3 (send_email)
+FAIL  error at call 3 (send_email): never did: email ana@example.com
+PASS  crash-before at call 4 (write_file)
+PASS  crash-after at call 4 (write_file)
+PASS  timeout at call 4 (write_file)
+FAIL  error at call 4 (write_file): never did: write invoices/cus_42-nov.txt
+
+Clean run made 4 tool calls: lookup_customer, charge, send_email, write_file.
+11 of 16 crash tests passed.
+
+When the service did the work, then the agent was killed before it heard back:
+  FAIL  crash-after at call 2 (charge): did 2 times, should be once: charge cus_42 120
+  FAIL  crash-after at call 3 (send_email): did 2 times, should be once: email ana@example.com
+
+When the service refused the call once with a temporary error:
+  FAIL  error at call 2 (charge): never did: charge cus_42 120
+  FAIL  error at call 3 (send_email): never did: email ana@example.com
+  FAIL  error at call 4 (write_file): never did: write invoices/cus_42-nov.txt

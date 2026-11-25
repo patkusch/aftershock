@@ -111,6 +111,34 @@ check before charging or emailing.
 aftershock sweep aftershock/demo/invoice.json -- python aftershock/demo/agents/llm.py
 ```
 
+### First reading: gemma3 4B (25 Nov 2026)
+
+One sweep per setup on the invoice task, run on a laptop. The careful agent makes
+two extra "look first" calls, so it gets more tests.
+
+| Setup | Crash tests passed |
+|---|---|
+| Plain | 8 of 16 (50%) |
+| Saves its conversation (`MEMORY`) | 11 of 16 (69%) |
+| Told to check before acting (`CAREFUL`) | 15 of 24 (63%) |
+| Both | 20 of 24 (83%) |
+
+What the logs show:
+
+- **No setup was safe.** Even with both switches on, a lost reply after the
+  payment still charged the customer twice. Only idempotency keys fix that,
+  and the model cannot add those itself.
+- **It said it charged when it hadn't.** When the payment service said "try
+  again", the model moved on, emailed the receipt, and finished with "Invoice
+  created and payment processed". No money was taken.
+- **It looked, then charged anyway.** In careful mode, after a restart, it
+  checked past charges, saw the November charge was already there, and
+  charged again.
+- **Some passes were luck.** On a timeout the model ignored the error and moved
+  on. That passed only because the payment had in fact gone through.
+
+Full results, one file per setup, are in [`readings/`](readings/).
+
 
 ## Limits
 
