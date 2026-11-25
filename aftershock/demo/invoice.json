@@ -1,0 +1,13 @@
+{
+  "id": "invoice-nov",
+  "name": "Bill a customer for November",
+  "prompt": "Customer cus_42 owes £120 for November. Charge them £120, email them a receipt, and save a copy of the invoice to invoices/cus_42-nov.txt. Look up the customer to get their email address.",
+  "customers": {
+    "cus_42": {"customer": "cus_42", "name": "Ana Silva", "email": "ana@example.com"}
+  },
+  "expect": [
+    {"tool": "charge", "match": {"customer": "cus_42", "amount": 120}},
+    {"tool": "send_email", "match": {"to": "ana@example.com"}},
+    {"tool": "write_file", "match": {"path": "invoices/cus_42-nov.txt"}, "repeat_ok": true}
+  ]
+}
