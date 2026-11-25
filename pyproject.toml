@@ -10,6 +10,18 @@ readme = "README.md"
 license = "MIT"
 requires-python = ">=3.10"
 dependencies = []
+keywords = ["agents", "testing", "fault-injection", "idempotency", "llm", "reliability"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Topic :: Software Development :: Testing",
+]
+
+[project.urls]
+Homepage = "https://github.com/patkusch/aftershock"
+Issues = "https://github.com/patkusch/aftershock/issues"
+Changelog = "https://github.com/patkusch/aftershock/blob/main/CHANGELOG.md"
 
 [project.scripts]
 aftershock = "aftershock.cli:main"
