@@ -1,5 +1,7 @@
 # aftershock
 
+[![ci](https://github.com/patkusch/aftershock/actions/workflows/ci.yml/badge.svg)](https://github.com/patkusch/aftershock/actions/workflows/ci.yml) ![python](https://img.shields.io/badge/python-3.10%2B-blue) ![deps](https://img.shields.io/badge/dependencies-none-brightgreen) ![licence](https://img.shields.io/badge/licence-MIT-lightgrey)
+
 **Crash-test your agent. Find out if it charges the customer twice.**
 
 Agents crash, time out and get restarted. When that happens partway through a
