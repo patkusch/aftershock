@@ -60,6 +60,12 @@ After each crash it restarts the agent (up to 3 times) and checks:
 - **unexpected**: the agent did something nobody asked for
 - **unfinished**: the agent never completed the job
 
+## Who it is for
+
+- People building agents that pay, email, book or write things on someone's behalf.
+- Teams adding retries or restarts to an agent and wanting proof it is safe.
+- Anyone comparing agent frameworks or models on what happens when things break.
+
 ## Use it on your own agent
 
 ```bash
