@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=68"]
+requires = ["setuptools>=84.2.1"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -32,7 +32,7 @@ Changelog = "https://github.com/patkusch/aftershock/blob/main/CHANGELOG.md"
 aftershock = "aftershock.cli:main"
 
 [project.optional-dependencies]
-dev = ["pytest>=8", "ruff>=0.6"]
+dev = ["pytest>=9.2.0", "ruff>=0.17.6"]
 
 [tool.setuptools.packages.find]
 include = ["aftershock*"]
