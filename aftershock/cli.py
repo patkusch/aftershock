@@ -42,13 +42,15 @@ def main(argv=None) -> int:
     p.add_argument("--version", action="version", version=f"aftershock {__version__}")
     sub = p.add_subparsers(dest="command", required=True)
 
-    pr = sub.add_parser("run", help="run once, optionally with one fault: aftershock run TASK --fault crash-after@2 -- CMD")
+    pr = sub.add_parser("run", help="run once, optionally with faults: aftershock run TASK --fault crash-after@2 -- CMD")
     pr.add_argument("task")
-    pr.add_argument("--fault", help="kind@call, e.g. crash-after@2")
+    pr.add_argument("--fault", help="kind@call, or several joined by commas, e.g. crash-after@2,timeout@5")
 
     ps = sub.add_parser("sweep", help="try every fault at every call: aftershock sweep TASK -- CMD")
     ps.add_argument("task")
     ps.add_argument("--faults", default=",".join(FAULT_KINDS), help="comma list of fault kinds")
+    ps.add_argument("--double", action="store_true",
+                    help="also try every pair of faults in one run (many more runs)")
     ps.add_argument("--json", help="write full results here")
     ps.add_argument("--md", help="write a Markdown table here")
 
@@ -84,17 +86,18 @@ def main(argv=None) -> int:
 
     if a.command == "run":
         try:
-            fault = Fault.parse(a.fault) if a.fault else None
+            faults = Fault.parse_many(a.fault) if a.fault else None
         except ValueError as e:
             print(e, file=sys.stderr)
             return 2
-        r = run(task, cmd, fault, **kw)
+        r = run(task, cmd, faults, **kw)
         print(line(r))
         for at in r.attempts:
             print(f"  attempt {at['attempt']}: exit {at['exit']}" + (" (we killed it)" if at["killed"] else ""))
         return 0 if r.passed else 1
 
-    res = sweep(task, cmd, _kinds(a.faults), on_result=lambda r: print(line(r), flush=True), **kw)
+    res = sweep(task, cmd, _kinds(a.faults), double=a.double,
+                on_result=lambda r: print(line(r), flush=True), **kw)
     print()
     print(summary(res))
     if a.json:
