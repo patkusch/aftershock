@@ -1,0 +1,17 @@
+{
+  "id": "invoice-two",
+  "name": "Bill two customers for November",
+  "prompt": "Customers cus_42 and cus_77 each owe £120 for November. Charge each one, email each a receipt, and save one invoice file per customer under invoices/. Look up each customer to get their email address.",
+  "customers": {
+    "cus_42": {"customer": "cus_42", "name": "Ana Silva", "email": "ana@example.com"},
+    "cus_77": {"customer": "cus_77", "name": "Ben Okafor", "email": "ben@example.com"}
+  },
+  "expect": [
+    {"tool": "charge", "match": {"customer": "cus_42", "amount": 120}},
+    {"tool": "charge", "match": {"customer": "cus_77", "amount": 120}},
+    {"tool": "send_email", "match": {"to": "ana@example.com"}},
+    {"tool": "send_email", "match": {"to": "ben@example.com"}},
+    {"tool": "write_file", "match": {"path": "invoices/cus_42-nov.txt"}, "repeat_ok": true},
+    {"tool": "write_file", "match": {"path": "invoices/cus_77-nov.txt"}, "repeat_ok": true}
+  ]
+}
