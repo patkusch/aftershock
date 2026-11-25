@@ -1,7 +1,9 @@
 # Changelog
 
-## Unreleased
+## 0.2.0 (2026-11-25)
 
+- `--double`: try every pair of faults in one run, and name failures that only show up when two things break.
+- `--fault` takes several faults, e.g. `crash-after@2,timeout@5`.
 - Shell example agent with curl, passes every crash test.
 - Guides to the four faults and to writing task files.
 - Two-customer example task.
