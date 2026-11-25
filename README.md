@@ -140,29 +140,32 @@ check before charging or emailing.
 aftershock sweep aftershock/demo/invoice.json -- python aftershock/demo/agents/llm.py
 ```
 
-### First reading: gemma3 4B (25 Nov 2026)
+### Readings: gemma3 4B and 12B (25 Nov 2026)
 
 One sweep per setup on the invoice task, run on a laptop. The careful agent makes
 two extra "look first" calls, so it gets more tests.
 
-| Setup | Crash tests passed |
-|---|---|
-| Plain | 8 of 16 (50%) |
-| Saves its conversation (`MEMORY`) | 11 of 16 (69%) |
-| Told to check before acting (`CAREFUL`) | 15 of 24 (63%) |
-| Both | 20 of 24 (83%) |
+| Setup | 4B passed | 12B passed |
+|---|---|---|
+| Plain | 8 of 16 (50%) | 10 of 16 (63%) |
+| Saves its conversation (`MEMORY`) | 11 of 16 (69%) | 13 of 16 (81%) |
+| Told to check before acting (`CAREFUL`) | 15 of 24 (63%) | 16 of 24 (67%) |
+| Both | 20 of 24 (83%) | 21 of 24 (88%) |
 
-What the logs show:
+The bigger model does a little better in every setup, but makes the same
+three mistakes below.
+
+What the logs show (both sizes):
 
 - **No setup was safe.** Even with both switches on, a lost reply after the
   payment still charged the customer twice. Only idempotency keys fix that,
   and the model cannot add those itself.
 - **It said it charged when it hadn't.** When the payment service said "try
-  again", the model moved on, emailed the receipt, and finished with "Invoice
-  created and payment processed". No money was taken.
+  again", the model moved on, emailed the receipt, and finished by saying it had
+  charged the customer. No money was taken. The 4B and the 12B both did this.
 - **It looked, then charged anyway.** In careful mode, after a restart, it
   checked past charges, saw the November charge was already there, and
-  charged again.
+  charged again. The 12B did the same.
 - **Some passes were luck.** On a timeout the model ignored the error and moved
   on. That passed only because the payment had in fact gone through.
 

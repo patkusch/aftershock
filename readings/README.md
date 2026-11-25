@@ -12,5 +12,11 @@ Each reading is one `aftershock sweep` on the demo invoice task. Each setup has 
 | `gemma3-4b-memory` | gemma3 4B | saves its conversation between restarts |
 | `gemma3-4b-careful` | gemma3 4B | told it may have been restarted, and to check first |
 | `gemma3-4b-memory-careful` | gemma3 4B | both |
+| `gemma3-12b-plain` | gemma3 12B | no memory, no warning |
+| `gemma3-12b-memory` | gemma3 12B | saves its conversation between restarts |
+| `gemma3-12b-careful` | gemma3 12B | told it may have been restarted, and to check first |
+| `gemma3-12b-memory-careful` | gemma3 12B | both |
+
+The 12B `careful` and `memory-careful` files were written by version 0.2.0, so their JSON lists `faults` instead of `fault`. The tests run were the same.
 
 Run on a laptop (Apple M5, 16 GB) through Ollama, temperature 0, one sweep per setup.

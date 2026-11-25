@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- gemma3 12B readings across the same four setups.
+
 ## 0.2.0 (2026-11-25)
 
 - `--double`: try every pair of faults in one run, and name failures that only show up when two things break.
