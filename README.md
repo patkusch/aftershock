@@ -188,6 +188,10 @@ Full results, one file per setup, are in [`readings/`](readings/).
 
 - [The four faults](docs/faults.md)
 - [Writing a task file](docs/writing-a-task.md)
+- [Adding idempotency keys](docs/idempotency-keys.md)
+- [Two faults in one run](docs/double-faults.md)
+- [Words used here](docs/glossary.md)
+- [Examples](examples/)
 - [Readings](readings/)
 - [Changelog](CHANGELOG.md)
 
