@@ -3,6 +3,8 @@
 ## Unreleased
 
 - gemma3 12B readings across the same four setups.
+- Guides to idempotency keys and two-fault runs, and a glossary.
+- CI also runs the shell example and tests Python 3.14.
 
 ## 0.2.0 (2026-11-25)
 
