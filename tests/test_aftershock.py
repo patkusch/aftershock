@@ -325,3 +325,13 @@ def test_cli_run_with_two_faults(capsys):
     code = main(["run", str(DEMO / "invoice.json"), "--fault", "crash-after@2,timeout@4", "--", *agent("safe")])
     assert code == 0
     assert "crash-after at call 2 (charge) then timeout at call 4" in capsys.readouterr().out
+
+
+# -- examples stay valid -----------------------------------------------------
+
+ROOT = Path(__file__).resolve().parent.parent
+
+
+def test_example_tasks_load():
+    t = Task.load(ROOT / "examples" / "two-customers.json")
+    assert len(t.expect) == 6 and set(t.customers) == {"cus_42", "cus_77"}
