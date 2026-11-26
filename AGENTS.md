@@ -5,3 +5,5 @@
 - Every new fault or check needs one agent that fails it and one that passes it, in `tests/`.
 - Readings in `readings/` are real runs. Never edit them by hand.
 - Write README text in plain English: what it does and why.
+- Guides live in `docs/`. Update the matching guide when a fault, check or flag changes.
+- A double sweep takes minutes; run it only when changing fault or report code.
