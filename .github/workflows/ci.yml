@@ -28,3 +28,5 @@ jobs:
       - run: ruff check .
       - run: pytest -q
       - run: aftershock demo
+      - name: shell example still passes every crash test
+        run: aftershock sweep aftershock/demo/invoice.json -- sh examples/curl_agent.sh
